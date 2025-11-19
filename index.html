@@ -1,112 +1,86 @@
 <!doctype html>
 <html lang="hu">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kaszinó ranglista — Zsetonok</title>
-  <style>
-    /* Reset & basic */
-    :root{--bg:#0b0b10;--card:#0f1720;--accent:#d4af37;--muted:#9aa4b2;--glass:rgba(255,255,255,0.03)}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(ellipse at 10% 10%, rgba(212,175,55,0.06), transparent 10%), linear-gradient(180deg,#060608 0%, #0b0b10 100%);color:#eef}
-    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
-    .board{width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-    header{display:flex;gap:16px;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#2b2b2b,#1a1a1a);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);box-shadow:inset 0 -6px 18px rgba(0,0,0,0.6)}
-    h1{margin:0;font-size:20px}
-    .controls{display:flex;gap:8px;align-items:center}
-    button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:8px;color:var(--muted);cursor:pointer}
-
-    .main{display:flex;gap:18px;margin-top:18px}
-    .left{flex:1}
-    .right{width:340px}
-
-    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-
-    .table{margin-top:12px;border-radius:8px;overflow:hidden}
-    .row{display:grid;grid-template-columns:48px 1fr 110px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.02)}
-    .row.header{font-size:13px;color:var(--muted);text-transform:uppercase}
-    .rank{font-weight:700;color:var(--accent)}
-    .name{font-weight:600}
-    .chips{display:flex;align-items:center;gap:8px;justify-content:flex-end}
-    .chip{background:var(--glass);padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.03)}
-
-    .pager{display:flex;justify-content:center;gap:12px;margin-top:10px}
-    .kbd{background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.02)}
-
-    .countdown{display:flex;flex-direction:column;gap:8px;align-items:center}
-    .big{font-size:42px;font-weight:800;color:var(--accent)}
-    .muted{color:var(--muted);font-size:13px}
-
-    /* modal */
-    .modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.7));z-index:120}
-    .modal{width:100%;max-width:560px;background:linear-gradient(180deg,#0e1114,#0b0d10);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
-    .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
-    input[type=text], input[type=number]{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
-    .row-actions{display:flex;gap:8px;justify-content:flex-end}
-
-    footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--muted);font-size:13px}
-
-    @media (max-width:900px){.main{flex-direction:column}.right{width:100%}.pager{display:none}}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kaszinó ranglista — Zsetonok</title>
+<style>
+:root{--bg:#0b0b10;--card:#0f1720;--accent:#d4af37;--muted:#9aa4b2;--glass:rgba(255,255,255,0.03)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(ellipse at 10% 10%, rgba(212,175,55,0.06), transparent 10%), linear-gradient(180deg,#060608 0%, #0b0b10 100%);color:#eef}
+.wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
+.board{width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:24px;box-shadow:0 12px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+header{display:flex;gap:16px;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#2b2b2b,#1a1a1a);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);box-shadow:inset 0 -6px 20px rgba(0,0,0,0.6);font-size:28px}
+h1{margin:0;font-size:24px}
+.main{display:flex;gap:24px;margin-top:24px}
+.left{flex:1}
+.right{width:380px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+.table{margin-top:12px;border-radius:10px;overflow:hidden}
+.row{display:grid;grid-template-columns:60px 1fr 120px;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.02)}
+.row.header{font-size:14px;color:var(--muted);text-transform:uppercase}
+.rank{font-weight:700;color:var(--accent)}
+.name{font-weight:600}
+.chips{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.chip{background:var(--glass);padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);font-weight:700;font-size:16px}
+.countdown{display:flex;flex-direction:column;gap:12px;align-items:center}
+.big{font-size:56px;font-weight:900;color:var(--accent)}
+.muted{color:var(--muted);font-size:14px}
+footer{display:flex;justify-content:space-between;align-items:center;margin-top:18px;color:var(--muted);font-size:14px}
+.modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.8));z-index:120}
+.modal{width:100%;max-width:600px;background:linear-gradient(180deg,#0e1114,#0b0d10);padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.04)}
+.form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+input[type=text], input[type=number]{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;font-size:16px}
+.row-actions{display:flex;gap:12px;justify-content:flex-end}
+button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 14px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600}
+@media (max-width:900px){.main{flex-direction:column}.right{width:100%}}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="board">
-      <header>
-        <div class="brand">
-          <div class="logo">Z</div>
-          <div>
-            <h1>Kaszinó ranglista</h1>
-            <div class="muted">Zsetonok • valós idejű • GitHub Pages kompatibilis</div>
-          </div>
+<div class="wrap">
+  <div class="board">
+    <header>
+      <div class="brand">
+        <div class="logo">Z</div>
+        <div>
+          <h1>Kaszinó ranglista</h1>
+          <div class="muted">Zsetonok • valós idejű • GitHub Pages kompatibilis</div>
         </div>
-        <div class="controls">
-          <div class="muted">Lapozás (PC): <span class="kbd">X</span> vissza <span class="kbd">Y</span> előre</div>
-          <button class="ghost" id="btn-help">Billentyűk</button>
-        </div>
-      </header>
+      </div>
+    </header>
 
-      <div class="main">
-        <div class="left">
-          <div class="card">
-            <div class="table" id="leaderboard">
-              <div class="row header"><div>#</div><div>Név</div><div style="text-align:right">Zseton</div></div>
-              <!-- rows injected here -->
-            </div>
-            <div class="pager" id="pager"></div>
-          </div>
-        </div>
-        <div class="right">
-          <div class="card countdown">
-            <div class="muted">Visszaszámláló</div>
-            <div class="big" id="time-display">—</div>
-            <div class="muted" id="countdown-state">Inaktív</div>
-            <div style="height:8px"></div>
-            <div class="muted">Nyomd: <span class="kbd">P</span> - hozzáadás, <span class="kbd">E</span> - pont módosítás, <span class="kbd">T</span> - idő beállítása</div>
+    <div class="main">
+      <div class="left">
+        <div class="card">
+          <div class="table" id="leaderboard">
+            <div class="row header"><div>#</div><div>Név</div><div style="text-align:right">Zseton</div></div>
           </div>
         </div>
       </div>
-
-      <footer>
-        <div>© Ranglista</div>
-        <div class="muted">Belépés kód: <strong>Kacsacsőrű-sertéspingvin</strong></div>
-      </footer>
+      <div class="right">
+        <div class="card countdown">
+          <div class="muted">Visszaszámláló</div>
+          <div class="big" id="time-display">—</div>
+          <div class="muted" id="countdown-state">Inaktív</div>
+        </div>
+      </div>
     </div>
+
+    <footer>
+      <div>© Ranglista</div>
+      <div class="muted">Belépés kód: <strong>Kacsacsőrű-sertéspingvin</strong></div>
+    </footer>
   </div>
+</div>
 
-  <!-- Modals -->
-  <div class="modal-backdrop" id="modal">
-    <div class="modal" id="modal-content"></div>
-  </div>
+<div class="modal-backdrop" id="modal">
+  <div class="modal" id="modal-content"></div>
+</div>
 
-  <script type="module">
-    // ============ CONFIG: Firebase
-    // Hozz létre egy Firebase projektet és Realtime Database-t (vagy Firestore-t) —
-    // majd másold be ide a konfigurációdat az alábbi objektumba.
-
-    const firebaseConfig = {
+<script type="module">
+const firebaseConfig = {
   apiKey: "AIzaSyAD3LRjJ_2DjK243U30BWSp_t8LWezZUVs",
   authDomain: "pontszamlalo.firebaseapp.com",
   projectId: "pontszamlalo",
@@ -115,280 +89,151 @@
   appId: "1:323030067350:web:6dd018fbf3f5c10703fab7",
   measurementId: "G-5LM0TMLW2W"
 };
+const USE_FIREBASE = true;
 
-    // If you do NOT want to use Firebase, the app will work locally in this browser only (no cross-device sync).
-    const USE_FIREBASE = true; // kapcsoló: ha false, csak helyi.
+const $=sel=>document.querySelector(sel);
+const $all=sel=>Array.from(document.querySelectorAll(sel));
+let dbRef=null;
+let localState={players:{},countdown:null,locked:false};
+let currentPage=0;
+const PAGE_SIZE=10;
+const isDesktop=window.matchMedia('(pointer:fine) and (min-width:900px)').matches;
 
-    // ============ App logic
-    // Data model in DB: /leaderboard : { players: { id: {name, chips}}, countdown: {expiresAt: timestamp|null}, locked: boolean }
+const modal=$('#modal'); const modalContent=$('#modal-content');
+function openModal(html){ modalContent.innerHTML=html; modal.style.display='flex'; }
+function closeModal(){ modal.style.display='none'; modalContent.innerHTML=''; }
+modal.addEventListener('click',(e)=>{if(e.target===modal)closeModal();});
 
-    // Utility helpers
-    const $ = sel => document.querySelector(sel);
-    const $all = sel => Array.from(document.querySelectorAll(sel));
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-    // ---- state
-    let dbRef = null;
-    let localState = { players: {}, countdown: null, locked: false };
-    let currentPage = 0;
-    const PAGE_SIZE = 10;
+function sortedPlayersArray(){
+  return Object.entries(localState.players||{}).map(([id,p])=>({id,name:p.name,chips:Number(p.chips||0)}))
+         .sort((a,b)=>b.chips!==a.chips?b.chips-a.chips:a.name.localeCompare(b.name,'hu'));
+}
 
-    // detect desktop for keyboard-only paging
-    const isDesktop = window.matchMedia('(pointer:fine) and (min-width:900px)').matches;
+function renderLeaderboard(){
+  const container=$('#leaderboard');
+  container.querySelectorAll('.row.player').forEach(n=>n.remove());
+  const arr=sortedPlayersArray();
+  const pages=Math.max(1,Math.ceil(arr.length/PAGE_SIZE));
+  if(currentPage>=pages)currentPage=pages-1;
+  const start=currentPage*PAGE_SIZE;
+  arr.slice(start,start+PAGE_SIZE).forEach((p,idx)=>{
+    const rank=start+idx+1;
+    const r=document.createElement('div');r.className='row player';
+    r.innerHTML=`<div class="rank">${rank}</div><div class="name">${escapeHTML(p.name)}</div><div class="chips"><div class="chip">${p.chips}</div></div>`;
+    container.appendChild(r);
+  });
+}
 
-    // Modal helper
-    const modal = $('#modal');
-    const modalContent = $('#modal-content');
-    function openModal(html){ modalContent.innerHTML = html; modal.style.display='flex'; }
-    function closeModal(){ modal.style.display='none'; modalContent.innerHTML=''; }
+function renderCountdown(){
+  const disp=$('#time-display');const state=$('#countdown-state');
+  if(localState.countdown&&localState.countdown.expiresAt){
+    const remaining=Math.max(0,Math.floor((localState.countdown.expiresAt-Date.now())/1000));
+    if(remaining<=0){disp.textContent='00:00:00';state.textContent='Lejárt — felajánlható lezárás';}
+    else{const h=String(Math.floor(remaining/3600)).padStart(2,'0');const m=String(Math.floor((remaining%3600)/60)).padStart(2,'0');const s=String(remaining%60).padStart(2,'0');disp.textContent=`${h}:${m}:${s}`;state.textContent='Aktív';}
+  }else{disp.textContent='—';state.textContent='Inaktív';}
+}
 
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModal(); });
+function renderAll(){ renderLeaderboard(); renderCountdown(); }
 
-    // ------------------ Firebase init (optional)
-    let firebaseApp, database;
-    if(USE_FIREBASE){
-      try{
-        // load SDK dynamically
-        await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
-        await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js');
-        // compat SDK is easier for small projects in single-file
-        firebaseApp = firebase.initializeApp(firebaseConfig);
-        database = firebase.database();
-        dbRef = database.ref('leaderboard');
-        // listen to changes
-        dbRef.on('value', snap => {
-          const val = snap.val() || {};
-          // normalize shape
-          localState.players = val.players || {};
-          localState.countdown = val.countdown || null;
-          localState.locked = !!val.locked;
-          renderAll();
-        });
-      }catch(err){
-        console.warn('Firebase betöltése sikertelen, fallback helyi módra.', err);
-        setupLocal();
-      }
-    } else { setupLocal(); }
+setInterval(()=>renderCountdown(),800);
 
-    function setupLocal(){
-      // load from localStorage
-      try{ const raw = localStorage.getItem('leaderboard_v1'); if(raw) localState = JSON.parse(raw); }catch(e){}
+async function initFirebase(){
+  if(!USE_FIREBASE)return;
+  try{
+    await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+    await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js');
+    firebase.initializeApp(firebaseConfig);
+    dbRef=firebase.database().ref('leaderboard');
+    dbRef.on('value',snap=>{
+      const val=snap.val()||{};
+      localState.players=val.players||{};
+      localState.countdown=val.countdown||null;
+      localState.locked=!!val.locked;
       renderAll();
-      // and save periodically
-      setInterval(()=> localStorage.setItem('leaderboard_v1', JSON.stringify(localState)),1000);
-    }
-
-    // ------------------ rendering
-    function sortedPlayersArray(){
-      return Object.entries(localState.players || {}).map(([id,p])=>({id, name:p.name, chips: Number(p.chips||0)}))
-        .sort((a,b)=>{ if(b.chips!==a.chips) return b.chips - a.chips; return a.name.localeCompare(b.name, 'hu'); });
-    }
-
-    function renderLeaderboard(){
-      const container = $('#leaderboard');
-      // remove old rows except header
-      container.querySelectorAll('.row.player').forEach(n=>n.remove());
-      const arr = sortedPlayersArray();
-      const pages = Math.max(1, Math.ceil(arr.length / PAGE_SIZE));
-      if(currentPage >= pages) currentPage = pages - 1;
-      const start = currentPage * PAGE_SIZE;
-      const slice = arr.slice(start, start + PAGE_SIZE);
-      slice.forEach((p, idx)=>{
-        const rank = start + idx + 1;
-        const r = document.createElement('div'); r.className='row player';
-        r.innerHTML = `<div class="rank">${rank}</div><div class="name">${escapeHTML(p.name)}</div><div class="chips"><div class="chip">${p.chips}</div></div>`;
-        container.appendChild(r);
-      });
-      renderPager(pages);
-    }
-
-    function renderPager(pages){
-      const pager = $('#pager'); pager.innerHTML='';
-      if(!isDesktop) return; // only on desktop
-      for(let i=0;i<pages;i++){
-        const b = document.createElement('button'); b.className='ghost'; b.textContent = (i+1);
-        if(i===currentPage) b.style.outline='2px solid rgba(212,175,55,0.16)';
-        b.addEventListener('click',()=>{ currentPage=i; renderAll(); });
-        pager.appendChild(b);
-      }
-    }
-
-    function renderCountdown(){
-      const disp = $('#time-display');
-      const state = $('#countdown-state');
-      if(localState.countdown && localState.countdown.expiresAt){
-        const remaining = Math.max(0, Math.floor((localState.countdown.expiresAt - Date.now())/1000));
-        if(remaining<=0){
-          disp.textContent = '00:00:00';
-          state.textContent = 'Lejárt — felajánlható lezárás';
-        } else {
-          const h = String(Math.floor(remaining/3600)).padStart(2,'0');
-          const m = String(Math.floor((remaining%3600)/60)).padStart(2,'0');
-          const s = String(remaining%60).padStart(2,'0');
-          disp.textContent = `${h}:${m}:${s}`;
-          state.textContent = 'Aktív';
-        }
-      } else {
-        disp.textContent = '—'; state.textContent = 'Inaktív';
-      }
-    }
-
-    function renderAll(){ renderLeaderboard(); renderCountdown(); }
-
-    // keep countdown ticking locally
-    setInterval(()=>{
-      if(localState.countdown && localState.countdown.expiresAt){
-        // if reached zero, do nothing automatic — just show
-      }
-      renderCountdown();
-    }, 800);
-
-    // ------------------ helpers for DB updates
-    function pushStateToDb(){
-      if(!dbRef){ // localStorage: already auto-saved
-        localStorage.setItem('leaderboard_v1', JSON.stringify(localState));
-        renderAll();
-        return;
-      }
-      dbRef.set({ players: localState.players, countdown: localState.countdown, locked: localState.locked }).catch(err=>console.error(err));
-    }
-
-    function ensurePlayerExistsByName(name){
-      const id = Object.keys(localState.players || {}).find(k => (localState.players[k].name||'').toLowerCase() === name.toLowerCase());
-      if(id) return id;
-      // else create
-      const newid = 'p_' + Math.random().toString(36).slice(2,9);
-      localState.players[newid] = { name: name.trim(), chips: 0 };
-      pushStateToDb();
-      return newid;
-    }
-
-    function changeChipsByName(name, delta){
-      const id = ensurePlayerExistsByName(name);
-      localState.players[id].chips = Number(localState.players[id].chips || 0) + Number(delta);
-      pushStateToDb();
-    }
-
-    // ------------------ keyboard controls
-    document.addEventListener('keydown', (e)=>{
-      const key = e.key.toLowerCase();
-      // paging only on desktop
-      if(isDesktop){ if(key==='x'){ currentPage = Math.max(0, currentPage-1); renderAll(); } if(key==='y'){ currentPage = currentPage + 1; renderAll(); } }
-      if(key==='p'){ e.preventDefault(); openAddName(); }
-      if(key==='e'){ e.preventDefault(); openEditPoints(); }
-      if(key==='t'){ e.preventDefault(); openSetTimer(); }
-      if(key==='escape'){ closeModal(); }
+      if(localState.locked)document.querySelector('.right').style.display='none';
     });
+  }catch(e){console.warn('Firebase nem elérhető',e);}
+}
 
-    // help button
-    $('#btn-help').addEventListener('click', ()=>{
-      openModal(`<h3>Billentyűk</h3><div class="muted">P: név hozzáadása<br/>E: pont módosítása<br/>T: visszaszámláló beállítása<br/>X/Y: oldalváltás (PC)</div><div style="height:10px"></div><div class="row-actions"><button class="ghost" onclick="document.getElementById('modal').style.display='none'">Ok</button></div>`);
+function setupLocal(){
+  try{const raw=localStorage.getItem('leaderboard_v1');if(raw)localState=JSON.parse(raw);}catch(e){}
+  renderAll();
+  setInterval(()=>localStorage.setItem('leaderboard_v1',JSON.stringify(localState)),1000);
+}
+
+function pushStateToDb(){
+  if(!dbRef){ localStorage.setItem('leaderboard_v1',JSON.stringify(localState)); renderAll(); return; }
+  dbRef.set({players:localState.players,countdown:localState.countdown,locked:localState.locked}).catch(console.error);
+}
+
+function ensurePlayerExistsByName(name){
+  const id=Object.keys(localState.players||{}).find(k=>(localState.players[k].name||'').toLowerCase()===name.toLowerCase());
+  if(id)return id;
+  const newid='p_'+Math.random().toString(36).slice(2,9);
+  localState.players[newid]={name:name.trim(),chips:0};
+  pushStateToDb();
+  return newid;
+}
+
+function changeChipsByName(name,delta){
+  const id=ensurePlayerExistsByName(name);
+  localState.players[id].chips=Number(localState.players[id].chips||0)+Number(delta);
+  pushStateToDb();
+}
+
+async function askCode(){
+  return new Promise(res=>{
+    openModal(`<h3>Belépési kód</h3><div class="form-row"><label>Kód</label><input id="inp-code" type="text"></div><div class="row-actions"><button class="ghost" id="exit">Kilép</button><button class="ghost" id="enter">Belép</button></div>`);
+    $('#exit').addEventListener('click',()=>{document.body.innerHTML='<div style="padding:40px;color:#fff">A hozzáférés megtagadva.</div>';});
+    $('#enter').addEventListener('click',()=>{
+      const v=$('#inp-code').value.trim();
+      if(v==='Kacsacsőrű-sertéspingvin'){ closeModal(); res(true); } else alert('Hibás kód');
     });
+  });
+}
 
-    // ============= modals: p (add name)
-    function openAddName(){
-      openModal(`<h3>Új név hozzáadása</h3>
-        <div class="form-row"><label>Név</label><input id="inp-name" type="text" placeholder="pl. Pisti"></div>
-        <div class="row-actions"><button class="ghost" id="cancel">Mégse</button><button class="ghost" id="ok">Hozzáad</button></div>`);
-      $('#cancel').addEventListener('click', closeModal);
-      $('#ok').addEventListener('click', ()=>{
-        const name = $('#inp-name').value.trim(); if(!name) return alert('Adj meg egy nevet');
-        ensurePlayerExistsByName(name); closeModal();
-      });
-      setTimeout(()=>$('#inp-name').focus(),50);
-    }
+// billentyűzet kezelése
+document.addEventListener('keydown',e=>{
+  const key=e.key.toLowerCase();
+  if(document.activeElement.tagName==='INPUT')return;
+  if(isDesktop){if(key==='x'){currentPage=Math.max(0,currentPage-1);renderAll();}if(key==='y'){currentPage++;renderAll();}}
+  if(key==='p'){ e.preventDefault(); openAddName(); }
+  if(key==='e'){ e.preventDefault(); openEditPoints(); }
+  if(key==='t'){ e.preventDefault(); openSetTimer(); }
+  if(key==='escape'){ closeModal(); }
+});
 
-    // ============= modals: e (edit points)
-    function openEditPoints(){
-      openModal(`<h3>Pont módosítása</h3>
-        <div class="form-row"><label>Név (pontot kapó/vesztő)</label><input id="inp-name2" type="text" placeholder="pl. Pisti"></div>
-        <div class="form-row"><label>Változás (+/-)</label><input id="inp-delta" type="number" placeholder="pl. -50 vagy 20"></div>
-        <div class="row-actions"><button class="ghost" id="cancel2">Mégse</button><button class="ghost" id="ok2">OK</button></div>`);
-      $('#cancel2').addEventListener('click', closeModal);
-      $('#ok2').addEventListener('click', ()=>{
-        const name = $('#inp-name2').value.trim(); const delta = Number($('#inp-delta').value);
-        if(!name) return alert('Adj meg egy nevet'); if(isNaN(delta)) return alert('Adj meg számot');
-        changeChipsByName(name, delta); closeModal();
-      });
-      setTimeout(()=>$('#inp-name2').focus(),50);
-    }
+// modal helper függvények (p/e/t)
+function openAddName(){
+  openModal(`<h3>Új név hozzáadása</h3><div class="form-row"><label>Név</label><input id="inp-name" type="text"></div><div class="row-actions"><button class="ghost" id="cancel">Mégse</button><button class="ghost" id="ok">Hozzáad</button></div>`);
+  $('#cancel').addEventListener('click',closeModal);
+  $('#ok').addEventListener('click',()=>{const name=$('#inp-name').value.trim();if(!name)return alert('Adj meg egy nevet');ensurePlayerExistsByName(name);closeModal();});
+  setTimeout(()=>$('#inp-name').focus(),50);
+}
+function openEditPoints(){
+  openModal(`<h3>Pont módosítása</h3>
+  <div class="form-row"><label>Név (pontot kapó/vesztő)</label><input id="inp-name2" type="text"></div>
+  <div class="form-row"><label>Változás (+/-)</label><input id="inp-delta" type="number"></div>
+  <div class="row-actions"><button class="ghost" id="cancel2">Mégse</button><button class="ghost" id="ok2">OK</button></div>`);
+  $('#cancel2').addEventListener('click',closeModal);
+  $('#ok2').addEventListener('click',()=>{const name=$('#inp-name2').value.trim();const delta=Number($('#inp-delta').value);if(!name)return alert('Adj meg egy nevet');if(isNaN(delta))return alert('Adj meg számot');changeChipsByName(name,delta);closeModal();});
+  setTimeout(()=>$('#inp-name2').focus(),50);
+}
+function openSetTimer(){
+  openModal(`<h3>Visszaszámláló beállítása</h3>
+  <div class="form-row"><label>Perc (egész szám)</label><input id="inp-mins" type="number"></div>
+  <div class="row-actions"><button class="ghost" id="cancel3">Mégse</button><button class="ghost" id="ok3">Beállít</button></div>`);
+  $('#cancel3').addEventListener('click',closeModal);
+  $('#ok3').addEventListener('click',()=>{const mins=Number($('#inp-mins').value);if(isNaN(mins)||mins<=0)return alert('Adj meg egy pozitív percet');localState.countdown={expiresAt:Date.now()+mins*60*1000};pushStateToDb();closeModal();});
+  setTimeout(()=>$('#inp-mins').focus(),50);
+}
 
-    // ============= modals: t (set timer in minutes)
-    function openSetTimer(){
-      openModal(`<h3>Visszaszámláló beállítása</h3>
-        <div class="form-row"><label>Perc (egész szám)</label><input id="inp-mins" type="number" placeholder="pl. 90"></div>
-        <div class="row-actions"><button class="ghost" id="cancel3">Mégse</button><button class="ghost" id="ok3">Beállít</button></div>`);
-      $('#cancel3').addEventListener('click', closeModal);
-      $('#ok3').addEventListener('click', ()=>{
-        const mins = Number($('#inp-mins').value);
-        if(isNaN(mins) || mins<=0) return alert('Adj meg egy pozitív percet');
-        localState.countdown = { expiresAt: Date.now() + mins*60*1000 };
-        pushStateToDb(); closeModal();
-      });
-      setTimeout(()=>$('#inp-mins').focus(),50);
-    }
-
-    // ============= startup: entrance code prompt
-    async function askCode(){
-      // show simple prompt modal
-      openModal(`<h3>Belépési kód</h3>
-        <div class="form-row"><label>Kód</label><input id="inp-code" type="text" placeholder="Írd be a kódot"></div>
-        <div class="row-actions"><button class="ghost" id="exit">Kilép</button><button class="ghost" id="enter">Belép</button></div>`);
-      $('#exit').addEventListener('click', ()=>{ closeModal(); document.body.innerHTML='<div style="padding:40px;color:#fff">A hozzáférés megtagadva.</div>'; });
-      $('#enter').addEventListener('click', ()=>{
-        const v = $('#inp-code').value.trim();
-        if(v === 'Kacsacsőrű-sertéspingvin'){
-          closeModal(); // allowed
-        } else {
-          alert('Hibás kód');
-        }
-      });
-    }
-
-    // show entrance prompt
-    await askCode();
-
-    // if joined first time and players empty -> no countdown
-    // (localState already loaded from DB listener or local storage)
-
-    // Provide ability to 'close' after countdown expired
-    // Add a small clickable badge near countdown to allow closing
-    const cdState = document.getElementById('countdown-state');
-    cdState.style.cursor='pointer';
-    cdState.title='Kattintva felajánlja a lezárást, ha lejárt.';
-    cdState.addEventListener('click', ()=>{
-      if(!localState.countdown || !localState.countdown.expiresAt) return alert('Nincs aktív visszaszámláló');
-      if(Date.now() < localState.countdown.expiresAt) return alert('Még nem járt le');
-      if(confirm('Le szeretnéd zárni a ranglistát? (Lezárás után csak a ranglista jelenik meg)')){
-        localState.locked = true;
-        pushStateToDb();
-        // hide countdown UI
-        document.querySelector('.right').style.display='none';
-      }
-    });
-
-    // If locked, hide countdown
-    function applyLockUI(){
-      if(localState.locked){ document.querySelector('.right').style.display='none'; }
-      else { document.querySelector('.right').style.display='block'; }
-    }
-
-    // watch for lock changes
-    setInterval(()=> applyLockUI(),500);
-
-    // Escape HTML helper
-    function escapeHTML(s){ return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-    // initial render
-    renderAll();
-
-  </script>
-
-  <!-- Notes:
-    - Ezt az egy fájlt közvetlenül feltöltheted GitHub Pages-re (index.html).
-    - Ha valós idejű, cross-device működést szeretnél, hozz létre egy Firebase projektet,
-      kapcsold be a Realtime Database-t (vagy Firestore), és másold a konfigurációt a firebaseConfig objektumba.
-    - A kód jelenleg a kompatibilis Firebase v9 compat CDN-es változatát tölti be.
-    - Ha nem szeretnél Firebase-t, állítsd a USE_FIREBASE = false-ra — ekkor csak a böngészőben lesz meg a tábla.
-  -->
+await initFirebase();
+await askCode();
+if(!USE_FIREBASE)setupLocal();
+renderAll();
+</script>
 </body>
 </html>
