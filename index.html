@@ -5,78 +5,83 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kaszinó ranglista — Zsetonok</title>
 <style>
-:root{--bg:#0b0b10;--card:#0f1720;--accent:#d4af37;--muted:#9aa4b2;--glass:rgba(255,255,255,0.03)}
+:root{--bg:#0b0b10;--card:#1a1a1a;--accent:#d4af37;--muted:#9aa4b2;--glass:rgba(255,255,255,0.05)}
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(ellipse at 10% 10%, rgba(212,175,55,0.06), transparent 10%), linear-gradient(180deg,#060608 0%, #0b0b10 100%);color:#eef}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(ellipse at 10% 10%, rgba(212,175,55,0.08), transparent 10%), linear-gradient(180deg,#060608 0%, #0b0b10 100%);color:#eef}
 .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
-.board{width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:24px;box-shadow:0 12px 50px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+.board{width:100%;max-width:1000px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:24px;box-shadow:0 12px 50px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03)}
 header{display:flex;gap:16px;align-items:center;justify-content:space-between}
 .brand{display:flex;gap:12px;align-items:center}
-.logo{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,#2b2b2b,#1a1a1a);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);box-shadow:inset 0 -6px 20px rgba(0,0,0,0.6);font-size:28px}
-h1{margin:0;font-size:24px}
+.logo{width:70px;height:70px;border-radius:14px;background:linear-gradient(135deg,#2b2b2b,#1a1a1a);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);box-shadow:inset 0 -6px 20px rgba(0,0,0,0.6);font-size:30px}
+h1{margin:0;font-size:28px}
 .main{display:flex;gap:24px;margin-top:24px}
 .left{flex:1}
-.right{width:380px}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+.right{width:400px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 25px rgba(0,0,0,0.4)}
 .table{margin-top:12px;border-radius:10px;overflow:hidden}
-.row{display:grid;grid-template-columns:60px 1fr 120px;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.02)}
-.row.header{font-size:14px;color:var(--muted);text-transform:uppercase}
+.row{display:grid;grid-template-columns:70px 1fr 140px;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.03);font-size:18px}
+.row.header{font-size:16px;color:var(--muted);text-transform:uppercase}
 .rank{font-weight:700;color:var(--accent)}
 .name{font-weight:600}
 .chips{display:flex;align-items:center;gap:8px;justify-content:flex-end}
-.chip{background:var(--glass);padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);font-weight:700;font-size:16px}
-.countdown{display:flex;flex-direction:column;gap:12px;align-items:center}
-.big{font-size:56px;font-weight:900;color:var(--accent)}
-.muted{color:var(--muted);font-size:14px}
+.chip{background:var(--glass);padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);font-weight:700;font-size:18px}
+.countdown{display:flex;flex-direction:column;gap:14px;align-items:center}
+.big{font-size:70px;font-weight:900;color:var(--accent)}
+.muted{color:var(--muted);font-size:15px}
 footer{display:flex;justify-content:space-between;align-items:center;margin-top:18px;color:var(--muted);font-size:14px}
-.modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.8));z-index:120}
-.modal{width:100%;max-width:600px;background:linear-gradient(180deg,#0e1114,#0b0d10);padding:20px;border-radius:14px;border:1px solid rgba(255,255,255,0.04)}
-.form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
-input[type=text], input[type=number]{padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit;font-size:16px}
-.row-actions{display:flex;gap:12px;justify-content:flex-end}
-button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 14px;border-radius:10px;color:var(--muted);cursor:pointer;font-weight:600}
-@media (max-width:900px){.main{flex-direction:column}.right{width:100%}}
+.modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.85));z-index:120}
+.modal{width:100%;max-width:620px;background:linear-gradient(180deg,#0e1114,#0b0d10);padding:24px;border-radius:16px;border:1px solid rgba(255,255,255,0.04)}
+.form-row{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+input[type=text], input[type=number]{padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:inherit;font-size:18px}
+.row-actions{display:flex;gap:14px;justify-content:flex-end}
+button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 18px;border-radius:12px;color:var(--muted);cursor:pointer;font-weight:700;font-size:16px}
+.pager{display:flex;justify-content:center;gap:14px;margin-top:14px}
+.kbd{background:rgba(0,0,0,0.4);padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.02);font-size:14px;font-weight:700}
+@media (max-width:900px){.main{flex-direction:column}.right{width:100%}.pager{display:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="board">
-    <header>
-      <div class="brand">
-        <div class="logo">Z</div>
-        <div>
-          <h1>Kaszinó ranglista</h1>
-          <div class="muted">Zsetonok • valós idejű • GitHub Pages kompatibilis</div>
-        </div>
-      </div>
-    </header>
+<div class="board">
+<header>
+<div class="brand">
+<div class="logo">Z</div>
+<div>
+<h1>Kaszinó ranglista</h1>
+<div class="muted">Zsetonok • valós idejű • GitHub Pages kompatibilis</div>
+</div>
+</div>
+</header>
 
-    <div class="main">
-      <div class="left">
-        <div class="card">
-          <div class="table" id="leaderboard">
-            <div class="row header"><div>#</div><div>Név</div><div style="text-align:right">Zseton</div></div>
-          </div>
-        </div>
-      </div>
-      <div class="right">
-        <div class="card countdown">
-          <div class="muted">Visszaszámláló</div>
-          <div class="big" id="time-display">—</div>
-          <div class="muted" id="countdown-state">Inaktív</div>
-        </div>
-      </div>
-    </div>
+<div class="main">
+<div class="left">
+<div class="card">
+<div class="table" id="leaderboard">
+<div class="row header"><div>#</div><div>Név</div><div style="text-align:right">Zseton</div></div>
+</div>
+<div class="pager" id="pager"></div>
+</div>
+</div>
 
-    <footer>
-      <div>© Ranglista</div>
-      <div class="muted">Belépés kód: <strong>Kacsacsőrű-sertéspingvin</strong></div>
-    </footer>
-  </div>
+<div class="right">
+<div class="card countdown">
+<div class="muted">Visszaszámláló</div>
+<div class="big" id="time-display">—</div>
+<div class="muted" id="countdown-state">Inaktív</div>
+<div class="muted">Nyomd: <span class="kbd">P</span> - hozzáadás, <span class="kbd">E</span> - pont módosítás, <span class="kbd">T</span> - idő beállítása, X/Y - lapozás</div>
+</div>
+</div>
+</div>
+
+<footer>
+<div>© Ranglista</div>
+<div class="muted">GitHub Pages verzió</div>
+</footer>
+</div>
 </div>
 
 <div class="modal-backdrop" id="modal">
-  <div class="modal" id="modal-content"></div>
+<div class="modal" id="modal-content"></div>
 </div>
 
 <script type="module">
@@ -91,24 +96,19 @@ const firebaseConfig = {
 };
 const USE_FIREBASE = true;
 
-const $=sel=>document.querySelector(sel);
-const $all=sel=>Array.from(document.querySelectorAll(sel));
-let dbRef=null;
-let localState={players:{},countdown:null,locked:false};
-let currentPage=0;
-const PAGE_SIZE=10;
-const isDesktop=window.matchMedia('(pointer:fine) and (min-width:900px)').matches;
+const $=s=>document.querySelector(s),$all=s=>Array.from(document.querySelectorAll(s));
+let dbRef=null,localState={players:{},countdown:null,locked:false},currentPage=0;
+const PAGE_SIZE=10,isDesktop=window.matchMedia('(pointer:fine) and (min-width:900px)').matches;
 
-const modal=$('#modal'); const modalContent=$('#modal-content');
+const modal=$('#modal');const modalContent=$('#modal-content');
 function openModal(html){ modalContent.innerHTML=html; modal.style.display='flex'; }
 function closeModal(){ modal.style.display='none'; modalContent.innerHTML=''; }
-modal.addEventListener('click',(e)=>{if(e.target===modal)closeModal();});
 
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
 function sortedPlayersArray(){
   return Object.entries(localState.players||{}).map(([id,p])=>({id,name:p.name,chips:Number(p.chips||0)}))
-         .sort((a,b)=>b.chips!==a.chips?b.chips-a.chips:a.name.localeCompare(b.name,'hu'));
+    .sort((a,b)=>b.chips!==a.chips?b.chips-a.chips:a.name.localeCompare(b.name,'hu'));
 }
 
 function renderLeaderboard(){
@@ -124,14 +124,27 @@ function renderLeaderboard(){
     r.innerHTML=`<div class="rank">${rank}</div><div class="name">${escapeHTML(p.name)}</div><div class="chips"><div class="chip">${p.chips}</div></div>`;
     container.appendChild(r);
   });
+  renderPager(pages);
+}
+
+function renderPager(pages){
+  const pager=$('#pager');pager.innerHTML='';
+  if(!isDesktop)return;
+  for(let i=0;i<pages;i++){
+    const b=document.createElement('button');b.className='ghost';b.textContent=(i+1);
+    if(i===currentPage)b.style.outline='2px solid rgba(212,175,55,0.3)';
+    b.addEventListener('click',()=>{currentPage=i; renderAll();});
+    pager.appendChild(b);
+  }
 }
 
 function renderCountdown(){
-  const disp=$('#time-display');const state=$('#countdown-state');
+  const disp=$('#time-display'),state=$('#countdown-state');
   if(localState.countdown&&localState.countdown.expiresAt){
-    const remaining=Math.max(0,Math.floor((localState.countdown.expiresAt-Date.now())/1000));
-    if(remaining<=0){disp.textContent='00:00:00';state.textContent='Lejárt — felajánlható lezárás';}
-    else{const h=String(Math.floor(remaining/3600)).padStart(2,'0');const m=String(Math.floor((remaining%3600)/60)).padStart(2,'0');const s=String(remaining%60).padStart(2,'0');disp.textContent=`${h}:${m}:${s}`;state.textContent='Aktív';}
+    const rem=Math.max(0,Math.floor((localState.countdown.expiresAt-Date.now())/1000));
+    if(rem<=0){disp.textContent='00:00:00';state.textContent='Lejárt — kattintva lezárható';}
+    else{const h=String(Math.floor(rem/3600)).padStart(2,'0'),m=String(Math.floor((rem%3600)/60)).padStart(2,'0'),s=String(rem%60).padStart(2,'0');
+      disp.textContent=`${h}:${m}:${s}`;state.textContent='Aktív';}
   }else{disp.textContent='—';state.textContent='Inaktív';}
 }
 
@@ -152,49 +165,20 @@ async function initFirebase(){
       localState.countdown=val.countdown||null;
       localState.locked=!!val.locked;
       renderAll();
-      if(localState.locked)document.querySelector('.right').style.display='none';
+      document.querySelector('.right').style.display=localState.locked?'none':'block';
     });
   }catch(e){console.warn('Firebase nem elérhető',e);}
 }
 
-function setupLocal(){
-  try{const raw=localStorage.getItem('leaderboard_v1');if(raw)localState=JSON.parse(raw);}catch(e){}
-  renderAll();
-  setInterval(()=>localStorage.setItem('leaderboard_v1',JSON.stringify(localState)),1000);
-}
+function setupLocal(){try{const raw=localStorage.getItem('leaderboard_v1');if(raw)localState=JSON.parse(raw);}catch(e){};renderAll();setInterval(()=>localStorage.setItem('leaderboard_v1',JSON.stringify(localState)),1000);}
 
-function pushStateToDb(){
-  if(!dbRef){ localStorage.setItem('leaderboard_v1',JSON.stringify(localState)); renderAll(); return; }
-  dbRef.set({players:localState.players,countdown:localState.countdown,locked:localState.locked}).catch(console.error);
-}
+function pushStateToDb(){if(!dbRef){localStorage.setItem('leaderboard_v1',JSON.stringify(localState)); renderAll(); return;}dbRef.set({players:localState.players,countdown:localState.countdown,locked:localState.locked}).catch(console.error);}
 
-function ensurePlayerExistsByName(name){
-  const id=Object.keys(localState.players||{}).find(k=>(localState.players[k].name||'').toLowerCase()===name.toLowerCase());
-  if(id)return id;
-  const newid='p_'+Math.random().toString(36).slice(2,9);
-  localState.players[newid]={name:name.trim(),chips:0};
-  pushStateToDb();
-  return newid;
-}
+function ensurePlayerExistsByName(name){const id=Object.keys(localState.players||{}).find(k=>(localState.players[k].name||'').toLowerCase()===name.toLowerCase());if(id)return id;const newid='p_'+Math.random().toString(36).slice(2,9);localState.players[newid]={name:name.trim(),chips:0};pushStateToDb();return newid;}
 
-function changeChipsByName(name,delta){
-  const id=ensurePlayerExistsByName(name);
-  localState.players[id].chips=Number(localState.players[id].chips||0)+Number(delta);
-  pushStateToDb();
-}
+function changeChipsByName(name,delta){const id=ensurePlayerExistsByName(name);localState.players[id].chips=Number(localState.players[id].chips||0)+Number(delta);pushStateToDb();}
 
-async function askCode(){
-  return new Promise(res=>{
-    openModal(`<h3>Belépési kód</h3><div class="form-row"><label>Kód</label><input id="inp-code" type="text"></div><div class="row-actions"><button class="ghost" id="exit">Kilép</button><button class="ghost" id="enter">Belép</button></div>`);
-    $('#exit').addEventListener('click',()=>{document.body.innerHTML='<div style="padding:40px;color:#fff">A hozzáférés megtagadva.</div>';});
-    $('#enter').addEventListener('click',()=>{
-      const v=$('#inp-code').value.trim();
-      if(v==='Kacsacsőrű-sertéspingvin'){ closeModal(); res(true); } else alert('Hibás kód');
-    });
-  });
-}
-
-// billentyűzet kezelése
+// Keyboard
 document.addEventListener('keydown',e=>{
   const key=e.key.toLowerCase();
   if(document.activeElement.tagName==='INPUT')return;
@@ -205,7 +189,7 @@ document.addEventListener('keydown',e=>{
   if(key==='escape'){ closeModal(); }
 });
 
-// modal helper függvények (p/e/t)
+// Modal helper functions
 function openAddName(){
   openModal(`<h3>Új név hozzáadása</h3><div class="form-row"><label>Név</label><input id="inp-name" type="text"></div><div class="row-actions"><button class="ghost" id="cancel">Mégse</button><button class="ghost" id="ok">Hozzáad</button></div>`);
   $('#cancel').addEventListener('click',closeModal);
@@ -213,25 +197,20 @@ function openAddName(){
   setTimeout(()=>$('#inp-name').focus(),50);
 }
 function openEditPoints(){
-  openModal(`<h3>Pont módosítása</h3>
-  <div class="form-row"><label>Név (pontot kapó/vesztő)</label><input id="inp-name2" type="text"></div>
-  <div class="form-row"><label>Változás (+/-)</label><input id="inp-delta" type="number"></div>
-  <div class="row-actions"><button class="ghost" id="cancel2">Mégse</button><button class="ghost" id="ok2">OK</button></div>`);
+  openModal(`<h3>Pont módosítása</h3><div class="form-row"><label>Név</label><input id="inp-name2" type="text"></div><div class="form-row"><label>Változás (+/-)</label><input id="inp-delta" type="number"></div><div class="row-actions"><button class="ghost" id="cancel2">Mégse</button><button class="ghost" id="ok2">OK</button></div>`);
   $('#cancel2').addEventListener('click',closeModal);
   $('#ok2').addEventListener('click',()=>{const name=$('#inp-name2').value.trim();const delta=Number($('#inp-delta').value);if(!name)return alert('Adj meg egy nevet');if(isNaN(delta))return alert('Adj meg számot');changeChipsByName(name,delta);closeModal();});
   setTimeout(()=>$('#inp-name2').focus(),50);
 }
 function openSetTimer(){
-  openModal(`<h3>Visszaszámláló beállítása</h3>
-  <div class="form-row"><label>Perc (egész szám)</label><input id="inp-mins" type="number"></div>
-  <div class="row-actions"><button class="ghost" id="cancel3">Mégse</button><button class="ghost" id="ok3">Beállít</button></div>`);
+  openModal(`<h3>Visszaszámláló beállítása</h3><div class="form-row"><label>Perc (egész szám)</label><input id="inp-mins" type="number"></div><div class="row-actions"><button class="ghost" id="cancel3">Mégse</button><button class="ghost" id="ok3">Beállít</button></div>`);
   $('#cancel3').addEventListener('click',closeModal);
   $('#ok3').addEventListener('click',()=>{const mins=Number($('#inp-mins').value);if(isNaN(mins)||mins<=0)return alert('Adj meg egy pozitív percet');localState.countdown={expiresAt:Date.now()+mins*60*1000};pushStateToDb();closeModal();});
   setTimeout(()=>$('#inp-mins').focus(),50);
 }
 
+// init
 await initFirebase();
-await askCode();
 if(!USE_FIREBASE)setupLocal();
 renderAll();
 </script>
