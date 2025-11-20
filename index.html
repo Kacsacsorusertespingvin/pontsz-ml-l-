@@ -1,197 +1,75 @@
-<!-- PRO Casino-Themed (but not labeled) UI – Fully redesigned -->
-<html>
+<!doctype html>
+<html lang="hu">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ranglista</title>
-
   <style>
-    /* ===== THEME: LUXURY DARK + GOLD ACCENTS ===== */
-    :root {
-      --gold: #f5d67b;
-      --gold-soft: rgba(245,214,123,0.25);
-      --bg1: #050607;
-      --bg2: #0b0e12;
-      --card: #11151c;
-      --glass: rgba(255,255,255,0.04);
-      --text: #eef2ff;
-      --muted: #9da7b9;
-    }
+    :root{--gold:#f5d67b;--bg1:#050607;--bg2:#0b0e12;--card:#0f1418;--muted:#9ca6b6}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;color:#eef;background:radial-gradient(circle at 15% 20%, rgba(245,214,123,0.06), transparent 20%),linear-gradient(180deg,var(--bg1),var(--bg2));display:flex;justify-content:center;padding:28px}
+    .wrap{width:100%;max-width:1220px;border-radius:20px;padding:30px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.25));border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 50px rgba(0,0,0,0.6)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
+    h1{margin:0;font-size:34px;color:var(--gold);text-shadow:0 0 12px rgba(245,214,123,0.18)}
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, sans-serif;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(245,214,123,0.06), transparent 60%),
-        radial-gradient(circle at 80% 80%, rgba(245,214,123,0.05), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg2));
-      color: var(--text);
-      padding: 24px;
-      display: flex;
-      justify-content: center;
-    }
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px;margin-top:18px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
 
-    /* ===== WRAPPER ===== */
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      padding: 34px;
-      border-radius: 22px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.25)),
-        var(--card);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow:
-        0 20px 45px rgba(0,0,0,0.65),
-        inset 0 0 28px rgba(255,255,255,0.02);
-    }
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.04)}
 
-    /* TITLE */
-    h1 {
-      font-size: 40px;
-      font-weight: 800;
-      margin: 0 0 22px 0;
-      color: var(--gold);
-      letter-spacing: 1px;
-      text-shadow: 0 0 18px rgba(245,214,123,0.35);
-    }
+    .leaderboard{border-radius:10px;overflow:hidden;margin-top:6px}
+    .row{display:grid;grid-template-columns:76px 1fr 160px;align-items:center;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.03);gap:12px}
+    .row.header{background:rgba(255,255,255,0.03);font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
+    .rank{font-weight:900;color:var(--gold);font-size:22px}
+    .name{font-weight:700}
+    .chips{justify-self:end;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);font-weight:800;color:var(--gold)}
 
-    /* ===== LEADERBOARD TABLE ===== */
-    .leaderboard {
-      margin-top: 20px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.05);
-      backdrop-filter: blur(6px);
-    }
+    .pager{display:flex;gap:8px;justify-content:center;margin-top:12px}
+    .pgbtn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .pgbtn.active{outline:2px solid rgba(245,214,123,0.16);color:var(--gold)}
 
-    .row {
-      display: grid;
-      grid-template-columns: 70px 1fr 160px;
-      padding: 18px 26px;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
-    }
+    /* modal */
+    .modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,0.7),rgba(0,0,0,0.8));z-index:200}
+    .modal{width:100%;max-width:520px;background:#0c0f13;padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.06)}
+    .modal h3{margin:0 0 8px 0;color:var(--gold)}
+    .form-row{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+    input[type=text],input[type=number]{padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .row-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
+    .btn{background:var(--gold);border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:800}
 
-    .row:nth-child(even) {
-      background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
-    }
-
-    .header {
-      background: rgba(255,255,255,0.06);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .rank {
-      font-size: 26px;
-      font-weight: 900;
-      color: var(--gold);
-      text-shadow: 0 0 8px rgba(245,214,123,0.5);
-    }
-
-    .chips {
-      font-weight: 700;
-      font-size: 18px;
-      padding: 10px 18px;
-      background: var(--glass);
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.07);
-      backdrop-filter: blur(5px);
-      text-align: right;
-      color: var(--gold);
-      box-shadow: inset 0 0 18px rgba(245,214,123,0.08);
-    }
-
-    /* ===== MODAL ===== */
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.72);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 200;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 480px;
-      background: #0e1015;
-      padding: 26px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.55);
-    }
-
-    .modal h3 {
-      margin: 0 0 14px 0;
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    input {
-      width: 100%;
-      padding: 14px;
-      font-size: 16px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      color: white;
-      outline: none;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    button {
-      padding: 12px 20px;
-      background: var(--gold);
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      color: #000;
-      transition: 0.15s;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(245,214,123,0.4);
-    }
+    /* subtle enhancements */
+    .empty{padding:20px;text-align:center;color:var(--muted)}
+    .subtle{color:var(--muted);font-size:13px}
 
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Ranglista</h1>
+  <div class="wrap">
+    <header>
+      <h1>Ranglista</h1>
+    </header>
 
-    <div class="leaderboard" id="leaderboard">
-      <div class="row header">
-        <div>#</div>
-        <div>Név</div>
-        <div style="text-align:right">Zseton</div>
+    <div class="grid">
+      <div class="panel">
+        <div class="leaderboard" id="leaderboard">
+          <div class="row header"><div>#</div><div>Név</div><div style="text-align:right">Zseton</div></div>
+        </div>
+        <div class="pager" id="pager" aria-hidden="true"></div>
+      </div>
+
+      <div class="panel" id="side">
+        <div class="subtle">Válassz név hozzáadáshoz vagy pontmódosításhoz a billentyűkkel.</div>
+        <div style="height:18px"></div>
+        <div class="subtle">Oldal: <span id="page-indicator">1</span></div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL -->
-  <div class="modal-backdrop" id="modal">
-    <div class="modal" id="modal-content"></div>
-  </div>
+  <div class="modal-backdrop" id="modal"><div class="modal" id="modal-content"></div></div>
 
   <script>
+    const PAGE_SIZE = 10;
+    let currentPage = 0;
     const firebaseConfig = {
       apiKey: "AIzaSyAD3LRjJ_2DjK243U30BWSp_t8LWezZUVs",
       authDomain: "pontszamlalo.firebaseapp.com",
@@ -203,41 +81,67 @@
       measurementId: "G-5LM0TMLW2W"
     };
 
-    let dbRef, local = { players:{} };
+    let dbRef=null; let state={players:{},countdown:null,locked:false};
 
-    async function init(){
-      await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
-      await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js');
-
-      firebase.initializeApp(firebaseConfig);
-      dbRef = firebase.database().ref('leaderboard');
-
-      dbRef.on('value', snap => {
-        const data = snap.val() || {};
-        local.players = data.players || {};
-        render();
-      });
+    async function initFirebase(){
+      try{
+        await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+        await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js');
+        firebase.initializeApp(firebaseConfig);
+        dbRef = firebase.database().ref('leaderboard');
+        dbRef.on('value', snap=>{ const v=snap.val()||{}; state.players=v.players||{}; state.countdown=v.countdown||null; state.locked=!!v.locked; renderAll(); });
+      }catch(e){console.warn('Firebase error',e); loadLocal(); }
     }
 
-    function render(){
-      const box = document.getElementById('leaderboard');
-      box.querySelectorAll('.row.player').forEach(n => n.remove());
+    function loadLocal(){ try{ const raw=localStorage.getItem('leaderboard_v1'); if(raw) state=JSON.parse(raw); renderAll(); }catch(e){} }
+    function persist(){ if(!dbRef){ localStorage.setItem('leaderboard_v1',JSON.stringify(state)); renderAll(); return;} dbRef.set({players:state.players,countdown:state.countdown,locked:state.locked}).catch(e=>console.error(e)); }
 
-      const arr = Object.values(local.players)
-        .sort((a,b)=> b.chips - a.chips || a.name.localeCompare(b.name));
+    function sortedArray(){ return Object.entries(state.players||{}).map(([id,p])=>({id,name:p.name,chips:Number(p.chips||0)})).sort((a,b)=> b.chips - a.chips || a.name.localeCompare(b.name,'hu')); }
 
-      arr.forEach((p,i)=>{
-        const el = document.createElement('div');
-        el.className = 'row player';
-        el.innerHTML = `
-          <div class="rank">${i+1}</div>
-          <div>${p.name}</div>
-          <div style="text-align:right"><span class="chips">${p.chips}</span></div>`;
-        box.appendChild(el);
-      });
+    function renderLeaderboard(){ const container=document.getElementById('leaderboard'); container.querySelectorAll('.row.player').forEach(n=>n.remove()); const arr=sortedArray(); const pages=Math.max(1,Math.ceil(arr.length/PAGE_SIZE)); if(currentPage>=pages) currentPage=pages-1; const start=currentPage*PAGE_SIZE; const slice=arr.slice(start,start+PAGE_SIZE); if(slice.length===0){ const e=document.createElement('div'); e.className='empty'; e.textContent='Nincs játékos'; container.appendChild(e); } else { slice.forEach((p,idx)=>{ const r=document.createElement('div'); r.className='row player'; r.innerHTML=`<div class="rank">${start+idx+1}</div><div class="name">${escapeHTML(p.name)}</div><div style="text-align:right"><div class="chips">${p.chips}</div></div>`; container.appendChild(r); }); }
+      renderPager(pages); document.getElementById('page-indicator').textContent = (currentPage+1);
     }
 
-    init();
+    function renderPager(pages){ const pager=document.getElementById('pager'); pager.innerHTML=''; for(let i=0;i<pages;i++){ const b=document.createElement('button'); b.className='pgbtn'+(i===currentPage?' active':''); b.textContent=(i+1); b.addEventListener('click',()=>{ currentPage=i; renderAll(); }); pager.appendChild(b); } }
+
+    function renderAll(){ renderLeaderboard(); }
+
+    function ensurePlayer(name){ if(!name) return null; const found = Object.keys(state.players||{}).find(k=> (state.players[k].name||'').toLowerCase()===name.toLowerCase()); if(found) return found; const id='p_'+Math.random().toString(36).slice(2,9); state.players[id]={name:name.trim(),chips:0}; persist(); return id; }
+    function changeChips(name,delta){ const id=ensurePlayer(name); if(!id) return; state.players[id].chips = Number(state.players[id].chips||0) + Number(delta); persist(); }
+    function setCountdownMinutes(mins){ state.countdown = { expiresAt: Date.now() + Number(mins||0)*60*1000 }; persist(); }
+
+    // Modal helpers
+    const modal = document.getElementById('modal'); const modalContent=document.getElementById('modal-content');
+    function openModal(html){ modalContent.innerHTML=html; modal.style.display='flex'; }
+    function closeModal(){ modal.style.display='none'; modalContent.innerHTML=''; }
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(); });
+
+    function escapeHTML(s){ return String(s).replace(/[&<>":']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+    // Implement P: add name modal
+    function openAddModal(){ openModal(`<h3>Név hozzáadása</h3><div class="form-row"><input id="inp-add" type="text" placeholder="Név"></div><div class="row-actions"><button class="btn" id="add-ok">Hozzáad</button></div>`); setTimeout(()=>document.getElementById('inp-add').focus(),50); document.getElementById('add-ok').addEventListener('click',()=>{ const n=document.getElementById('inp-add').value.trim(); if(!n) return; ensurePlayer(n); closeModal(); }); }
+
+    // E: edit points modal (name + delta)
+    function openEditModal(){ openModal(`<h3>Pont módosítása</h3><div class="form-row"><input id="inp-name" type="text" placeholder="Név (létező vagy új)"></div><div class="form-row"><input id="inp-delta" type="number" placeholder="+100 vagy -50"></div><div class="row-actions"><button class="btn" id="edit-ok">OK</button></div>`); setTimeout(()=>document.getElementById('inp-name').focus(),50); document.getElementById('edit-ok').addEventListener('click',()=>{ const n=document.getElementById('inp-name').value.trim(); const d=Number(document.getElementById('inp-delta').value); if(!n) return alert('Adj meg egy nevet'); if(isNaN(d)) return alert('Adj meg számot'); changeChips(n,d); closeModal(); }); }
+
+    // I: set timer
+    function openTimerModal(){ openModal(`<h3>Visszaszámláló (perc)</h3><div class="form-row"><input id="inp-mins" type="number" placeholder="pl. 90"></div><div class="row-actions"><button class="btn" id="timer-ok">Beállít</button></div>`); setTimeout(()=>document.getElementById('inp-mins').focus(),50); document.getElementById('timer-ok').addEventListener('click',()=>{ const m=Number(document.getElementById('inp-mins').value); if(isNaN(m)||m<=0) return alert('Adj meg pozitív percet'); setCountdownMinutes(m); closeModal(); }); }
+
+    // Keyboard handling
+    document.addEventListener('keydown', (e)=>{
+      // if modal open, route keys inside modal only
+      if(modal.style.display==='flex') return;
+      const key = e.key.toLowerCase();
+      if(key==='p'){ e.preventDefault(); openAddModal(); }
+      else if(key==='e'){ e.preventDefault(); openEditModal(); }
+      else if(key==='i'){ e.preventDefault(); openTimerModal(); }
+      else if(key==='x'){ e.preventDefault(); currentPage = Math.max(0, currentPage-1); renderAll(); }
+      else if(key==='y'){ e.preventDefault(); currentPage = currentPage + 1; renderAll(); }
+    });
+
+    // Init
+    initFirebase();
+
   </script>
 </body>
 </html>
