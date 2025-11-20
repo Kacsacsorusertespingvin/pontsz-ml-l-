@@ -1,157 +1,243 @@
-<!doctype html>
-<html lang="hu">
+<!-- PRO Casino-Themed (but not labeled) UI – Fully redesigned -->
+<html>
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kaszinó ranglista — Zsetonok</title>
-<style>
-:root{--bg:#0b0b10;--card:#1f1f1f;--accent:#d4af37;--muted:#9aa4b2;--glass:rgba(255,255,255,0.05)}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:Inter,Segoe UI,Roboto,sans-serif;background:radial-gradient(ellipse at 10% 10%, rgba(212,175,55,0.08), transparent 10%), linear-gradient(180deg,#060608 0%, #0b0b10 100%);color:#eef}
-.wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px}
-.board{width:100%;max-width:1000px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:24px;box-shadow:0 12px 50px rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.03)}
-header{display:flex;gap:16px;align-items:center;justify-content:space-between}
-.brand{display:flex;gap:12px;align-items:center}
-.logo{width:70px;height:70px;border-radius:14px;background:linear-gradient(135deg,#2b2b2b,#1a1a1a);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);box-shadow:inset 0 -6px 20px rgba(0,0,0,0.6);font-size:30px}
-h1{margin:0;font-size:28px}
-.main{display:flex;gap:24px;margin-top:24px}
-.left{flex:1}
-.right{width:400px}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:22px;border-radius:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 25px rgba(0,0,0,0.4)}
-.table{margin-top:12px;border-radius:10px;overflow:hidden}
-.row{display:grid;grid-template-columns:70px 1fr 140px;align-items:center;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.03);font-size:18px}
-.row.header{font-size:16px;color:var(--muted);text-transform:uppercase}
-.rank{font-weight:700;color:var(--accent)}
-.name{font-weight:600}
-.chips{display:flex;align-items:center;gap:8px;justify-content:flex-end}
-.chip{background:var(--glass);padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);font-weight:700;font-size:18px}
-.countdown{display:flex;flex-direction:column;gap:14px;align-items:center}
-.big{font-size:70px;font-weight:900;color:var(--accent)}
-.muted{color:var(--muted);font-size:15px}
-footer{display:flex;justify-content:space-between;align-items:center;margin-top:18px;color:var(--muted);font-size:14px}
-.modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.7), rgba(0,0,0,0.85));z-index:120}
-.modal{width:100%;max-width:620px;background:linear-gradient(180deg,#0e1114,#0b0d10);padding:24px;border-radius:16px;border:1px solid rgba(255,255,255,0.04)}
-.form-row{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
-input[type=text], input[type=number]{padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.05);background:transparent;color:inherit;font-size:18px}
-.row-actions{display:flex;gap:14px;justify-content:flex-end}
-button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px 18px;border-radius:12px;color:var(--muted);cursor:pointer;font-weight:700;font-size:16px}
-.pager{display:flex;justify-content:center;gap:14px;margin-top:14px}
-.kbd{background:rgba(0,0,0,0.4);padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,0.02);font-size:14px;font-weight:700}
-@media (max-width:900px){.main{flex-direction:column}.right{width:100%}.pager{display:none}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ranglista</title>
+
+  <style>
+    /* ===== THEME: LUXURY DARK + GOLD ACCENTS ===== */
+    :root {
+      --gold: #f5d67b;
+      --gold-soft: rgba(245,214,123,0.25);
+      --bg1: #050607;
+      --bg2: #0b0e12;
+      --card: #11151c;
+      --glass: rgba(255,255,255,0.04);
+      --text: #eef2ff;
+      --muted: #9da7b9;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(245,214,123,0.06), transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(245,214,123,0.05), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ===== WRAPPER ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 34px;
+      border-radius: 22px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,0,0,0.25)),
+        var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 20px 45px rgba(0,0,0,0.65),
+        inset 0 0 28px rgba(255,255,255,0.02);
+    }
+
+    /* TITLE */
+    h1 {
+      font-size: 40px;
+      font-weight: 800;
+      margin: 0 0 22px 0;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-shadow: 0 0 18px rgba(245,214,123,0.35);
+    }
+
+    /* ===== LEADERBOARD TABLE ===== */
+    .leaderboard {
+      margin-top: 20px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 70px 1fr 160px;
+      padding: 18px 26px;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
+    }
+
+    .row:nth-child(even) {
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+    }
+
+    .header {
+      background: rgba(255,255,255,0.06);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .rank {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--gold);
+      text-shadow: 0 0 8px rgba(245,214,123,0.5);
+    }
+
+    .chips {
+      font-weight: 700;
+      font-size: 18px;
+      padding: 10px 18px;
+      background: var(--glass);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.07);
+      backdrop-filter: blur(5px);
+      text-align: right;
+      color: var(--gold);
+      box-shadow: inset 0 0 18px rgba(245,214,123,0.08);
+    }
+
+    /* ===== MODAL ===== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 480px;
+      background: #0e1015;
+      padding: 26px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.55);
+    }
+
+    .modal h3 {
+      margin: 0 0 14px 0;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      outline: none;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    button {
+      padding: 12px 20px;
+      background: var(--gold);
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #000;
+      transition: 0.15s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(245,214,123,0.4);
+    }
+
+  </style>
 </head>
 <body>
-<div class="wrap">
-<div class="board">
-<header>
-<div class="brand">
-<div class="logo">Z</div>
-<div>
-<h1>Kaszinó ranglista</h1>
-<div class="muted">Zsetonok • LocalStorage</div>
-</div>
-</div>
-</header>
+  <div class="container">
+    <h1>Ranglista</h1>
 
-<div class="main">
-<div class="left">
-<div class="card">
-<div class="table" id="leaderboard">
-<div class="row header"><div>#</div><div>Név</div><div style="text-align:right">Zseton</div></div>
-</div>
-<div class="pager" id="pager"></div>
-</div>
-</div>
+    <div class="leaderboard" id="leaderboard">
+      <div class="row header">
+        <div>#</div>
+        <div>Név</div>
+        <div style="text-align:right">Zseton</div>
+      </div>
+    </div>
+  </div>
 
-<div class="right">
-<div class="card countdown">
-<div class="muted">Visszaszámláló</div>
-<div class="big" id="time-display">—</div>
-<div class="muted" id="countdown-state">Inaktív</div>
-<div class="muted">Nyomd: <span class="kbd">P</span> - hozzáadás, <span class="kbd">E</span> - pont módosítás, <span class="kbd">T</span> - idő beállítása, X/Y - lapozás</div>
-</div>
-</div>
-</div>
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" id="modal-content"></div>
+  </div>
 
-<footer>
-<div>© Ranglista</div>
-<div class="muted">LocalStorage verzió</div>
-</footer>
-</div>
-</div>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAD3LRjJ_2DjK243U30BWSp_t8LWezZUVs",
+      authDomain: "pontszamlalo.firebaseapp.com",
+      databaseURL: "https://pontszamlalo-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "pontszamlalo",
+      storageBucket: "pontszamlalo.firebasestorage.app",
+      messagingSenderId: "323030067350",
+      appId: "1:323030067350:web:6dd018fbf3f5c10703fab7",
+      measurementId: "G-5LM0TMLW2W"
+    };
 
-<div class="modal-backdrop" id="modal">
-<div class="modal" id="modal-content"></div>
-</div>
+    let dbRef, local = { players:{} };
 
-<script>
-const $=s=>document.querySelector(s);
-let localState={players:{},countdown:null,locked:false},currentPage=0;
-const PAGE_SIZE=10,isDesktop=window.matchMedia('(pointer:fine) and (min-width:900px)').matches;
+    async function init(){
+      await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+      await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js');
 
-function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function sortedPlayersArray(){return Object.entries(localState.players||{}).map(([id,p])=>({id,name:p.name,chips:Number(p.chips||0)})).sort((a,b)=>b.chips!==a.chips?b.chips-a.chips:a.name.localeCompare(b.name,'hu'));}
-function renderLeaderboard(){
-  const container=$('#leaderboard');container.querySelectorAll('.row.player').forEach(n=>n.remove());
-  const arr=sortedPlayersArray();const pages=Math.max(1,Math.ceil(arr.length/PAGE_SIZE));
-  if(currentPage>=pages)currentPage=pages-1;
-  const start=currentPage*PAGE_SIZE;
-  arr.slice(start,start+PAGE_SIZE).forEach((p,idx)=>{
-    const rank=start+idx+1;const r=document.createElement('div');r.className='row player';
-    r.innerHTML=`<div class="rank">${rank}</div><div class="name">${escapeHTML(p.name)}</div><div class="chips"><div class="chip">${p.chips}</div></div>`;
-    container.appendChild(r);
-  });renderPager(pages);
-}
-function renderPager(pages){const pager=$('#pager');pager.innerHTML='';if(!isDesktop)return;
-for(let i=0;i<pages;i++){const b=document.createElement('button');b.className='ghost';b.textContent=(i+1);
-if(i===currentPage)b.style.outline='2px solid rgba(212,175,55,0.3)';
-b.addEventListener('click',()=>{currentPage=i;renderAll();});pager.appendChild(b);}}
-function renderCountdown(){
-  const disp=$('#time-display'),state=$('#countdown-state');
-  if(localState.countdown&&localState.countdown.expiresAt){
-    const rem=Math.max(0,Math.floor((localState.countdown.expiresAt-Date.now())/1000));
-    if(rem<=0){disp.textContent='00:00:00';state.textContent='Lejárt — kattintva lezárható';}else{
-      const h=String(Math.floor(rem/3600)).padStart(2,'0'),m=String(Math.floor((rem%3600)/60)).padStart(2,'0'),s=String(rem%60).padStart(2,'0');
-      disp.textContent=`${h}:${m}:${s}`;state.textContent='Aktív';}}
-  else{disp.textContent='—';state.textContent='Inaktív';}
-}
-function renderAll(){renderLeaderboard();renderCountdown();}
+      firebase.initializeApp(firebaseConfig);
+      dbRef = firebase.database().ref('leaderboard');
 
-function saveState(){localStorage.setItem('leaderboard_v1',JSON.stringify(localState));renderAll();}
-function loadState(){try{const raw=localStorage.getItem('leaderboard_v1');if(raw)localState=JSON.parse(raw);}catch(e){};renderAll();}
-function ensurePlayerExistsByName(name){const id=Object.keys(localState.players||{}).find(k=>(localState.players[k].name||'').toLowerCase()===name.toLowerCase());if(id)return id;const newid='p_'+Math.random().toString(36).slice(2,9);localState.players[newid]={name:name.trim(),chips:0};saveState();return newid;}
-function changeChipsByName(name,delta){const id=ensurePlayerExistsByName(name);localState.players[id].chips=Number(localState.players[id].chips||0)+Number(delta);saveState();}
+      dbRef.on('value', snap => {
+        const data = snap.val() || {};
+        local.players = data.players || {};
+        render();
+      });
+    }
 
-// keyboard
-document.addEventListener('keydown',e=>{
-  const key=e.key.toLowerCase();
-  if(document.activeElement.tagName==='INPUT')return;
-  if(isDesktop){if(key==='x'){currentPage=Math.max(0,currentPage-1);renderAll();}if(key==='y'){currentPage++;renderAll();}}
-  if(key==='p'){ e.preventDefault(); openAddName(); }
-  if(key==='e'){ e.preventDefault(); openEditPoints(); }
-  if(key==='t'){ e.preventDefault(); openSetTimer(); }
-  if(key==='escape'){ closeModal(); }
-});
+    function render(){
+      const box = document.getElementById('leaderboard');
+      box.querySelectorAll('.row.player').forEach(n => n.remove());
 
-const modal=$('#modal');const modalContent=$('#modal-content');
-function openModal(html){ modalContent.innerHTML=html; modal.style.display='flex'; }
-function closeModal(){ modal.style.display='none'; modalContent.innerHTML=''; }
-modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+      const arr = Object.values(local.players)
+        .sort((a,b)=> b.chips - a.chips || a.name.localeCompare(b.name));
 
-// modals
-function openAddName(){openModal(`<h3>Új név hozzáadása</h3><div class="form-row"><label>Név</label><input id="inp-name" type="text"></div><div class="row-actions"><button class="ghost" id="cancel">Mégse</button><button class="ghost" id="ok">Hozzáad</button></div>`);$('#cancel').addEventListener('click',closeModal);$('#ok').addEventListener('click',()=>{const name=$('#inp-name').value.trim();if(!name)return alert('Adj meg egy nevet');ensurePlayerExistsByName(name);closeModal();});setTimeout(()=>$('#inp-name').focus(),50);}
-function openEditPoints(){openModal(`<h3>Pont módosítása</h3><div class="form-row"><label>Név</label><input id="inp-name2" type="text"></div><div class="form-row"><label>Változás (+/-)</label><input id="inp-delta" type="number"></div><div class="row-actions"><button class="ghost" id="cancel2">Mégse</button><button class="ghost" id="ok2">OK</button></div>`);$('#cancel2').addEventListener('click',closeModal);$('#ok2').addEventListener('click',()=>{const name=$('#inp-name2').value.trim();const delta=Number($('#inp-delta').value);if(!name)return alert('Adj meg egy nevet');if(isNaN(delta))return alert('Adj meg számot');changeChipsByName(name,delta);closeModal();});setTimeout(()=>$('#inp-name2').focus(),50);}
-function openSetTimer(){openModal(`<h3>Visszaszámláló beállítása</h3><div class="form-row"><label>Perc (egész szám)</label><input id="inp-mins" type="number"></div><div class="row-actions"><button class="ghost" id="cancel3">Mégse</button><button class="ghost" id="ok3">Beállít</button></div>`);$('#cancel3').addEventListener('click',closeModal);$('#ok3').addEventListener('click',()=>{const mins=Number($('#inp-mins').value);if(isNaN(mins)||mins<=0)return alert('Adj meg egy pozitív percet');localState.countdown={expiresAt:Date.now()+mins*60*1000};saveState();closeModal();});setTimeout(()=>$('#inp-mins').focus(),50);}
+      arr.forEach((p,i)=>{
+        const el = document.createElement('div');
+        el.className = 'row player';
+        el.innerHTML = `
+          <div class="rank">${i+1}</div>
+          <div>${p.name}</div>
+          <div style="text-align:right"><span class="chips">${p.chips}</span></div>`;
+        box.appendChild(el);
+      });
+    }
 
-// countdown close
-document.getElementById('countdown-state').addEventListener('click',()=>{
-  if(!localState.countdown||!localState.countdown.expiresAt)return alert('Nincs aktív visszaszámláló');
-  if(Date.now()<localState.countdown.expiresAt)return alert('Még nem járt le');
-  if(confirm('Le szeretnéd zárni a ranglistát?')){localState.locked=true;saveState();document.querySelector('.right').style.display='none';}
-});
-
-setInterval(renderCountdown,800);
-loadState();
-</script>
+    init();
+  </script>
 </body>
 </html>
