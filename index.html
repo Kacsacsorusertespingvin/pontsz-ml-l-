@@ -6,54 +6,38 @@
   <title>Ranglista</title>
 
   <style>
-    /* ======= LUXUS, ARANY-FEKETE, PRÉMIUM TÉMA ======= */
     :root{
       --bg:#050507;
       --panel:#0b0e14;
       --glass:rgba(255,255,255,0.06);
       --line:rgba(255,255,255,0.08);
       --gold:#e3c770;
-      --gold-dim:#bba45c;
       --text:#f2f2f2;
       --muted:#a7a7b0;
     }
-    *{box-sizing:border-box;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;}
-    body{margin:0;background:radial-gradient(circle at 20% 10%,rgba(227,199,112,0.08),transparent 60%),#050507;color:var(--text);}
-
+    body{margin:0;background:#050507;color:var(--text);font-family:Inter,Arial,sans-serif;}
     .wrap{padding:26px;display:flex;justify-content:center;}
-    .board{width:100%;max-width:1080px;background:var(--panel);border-radius:20px;padding:22px;border:1px solid var(--line);box-shadow:0 0 50px #000 inset,0 0 40px rgba(0,0,0,0.8);}    
-
-    /* HEADER */
+    .board{width:100%;max-width:1200px;background:var(--panel);border-radius:20px;padding:22px;border:1px solid var(--line);}    
     header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-    .logo{font-size:26px;font-weight:800;color:var(--gold);letter-spacing:1px;text-shadow:0 0 12px rgba(227,199,112,0.4);}    
-
-    /* MAIN GRID */
-    .main{display:flex;gap:24px;margin-top:10px;}
+    .logo{font-size:26px;font-weight:800;color:var(--gold);}    
+    .main{display:flex;gap:24px;}
     .left{flex:1;}
     .right{width:320px;}
+    .card{background:var(--glass);padding:16px;border-radius:18px;border:1px solid var(--line);}
 
-    /* CARDS */
-    .card{background:var(--glass);padding:16px;border-radius:18px;border:1px solid var(--line);backdrop-filter:blur(12px);}    
-
-    /* LEADERBOARD */
     .table{border-radius:14px;overflow:hidden;margin-top:8px;}
-    .row{display:grid;grid-template-columns:55px 1fr 120px;padding:10px 14px;border-bottom:1px solid var(--line);align-items:center;}
-    .row.header{color:var(--muted);text-transform:uppercase;font-size:13px;background:rgba(255,255,255,0.02);}    
+    .row{display:grid;grid-template-columns:55px 1fr 120px;padding:10px 14px;border-bottom:1px solid var(--line);}
+    .row.header{color:var(--muted);text-transform:uppercase;font-size:13px;}
     .rank{font-weight:700;color:var(--gold);}    
-    .name{font-weight:600;font-size:15px;}    
-    .chips{text-align:right;font-weight:700;color:var(--gold);}    
+    .chips{text-align:right;color:var(--gold);font-weight:700;}
 
-    /* PAGER */
     .pager{display:flex;justify-content:center;gap:10px;margin-top:12px;}
     .pagebtn{background:transparent;border:1px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;}
     .pagebtn.active{border-color:var(--gold);color:var(--gold);}    
 
-    /* COUNTDOWN */
-    .countdown{text-align:center;}
-    .time{font-size:44px;font-weight:800;color:var(--gold);margin-top:6px;text-shadow:0 0 12px rgba(227,199,112,0.45);}    
-    .state{color:var(--muted);font-size:14px;cursor:pointer;margin-top:4px;}    
+    .time{font-size:44px;text-align:center;color:var(--gold);font-weight:800;}
+    .state{text-align:center;color:var(--muted);margin-top:4px;}
 
-    /* MODAL */
     .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:200;}    
     .modal{background:var(--panel);padding:22px;border-radius:16px;width:100%;max-width:420px;border:1px solid var(--line);}    
     .form-row{display:flex;flex-direction:column;margin-bottom:14px;}    
@@ -61,29 +45,23 @@
     .row-actions{display:flex;justify-content:flex-end;gap:12px;}    
     .btn{padding:10px 18px;border-radius:10px;border:1px solid var(--line);background:#111;color:var(--text);cursor:pointer;}    
     .btn:hover{border-color:var(--gold);color:var(--gold);}    
-
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="board">
 
-    <header>
-      <div class="logo">Ranglista</div>
-    </header>
+    <header><div class="logo">Ranglista</div></header>
 
     <div class="main">
       <div class="left">
         <div class="card">
-          <div class="table" id="leaderboard">
-            <div class="row header"><div>#</div><div>Név</div><div>Pont</div></div>
-          </div>
+          <div class="table" id="leaderboard"><div class="row header"><div>#</div><div>Név</div><div>Pont</div></div></div>
           <div class="pager" id="pager"></div>
         </div>
       </div>
-
       <div class="right">
-        <div class="card countdown">
+        <div class="card">
           <div class="time" id="time-display">—</div>
           <div class="state" id="countdown-state">Inaktív</div>
         </div>
@@ -93,16 +71,9 @@
   </div>
 </div>
 
-<!-- MODAL -->
-<div class="modal-backdrop" id="modal">
-  <div class="modal" id="modal-content"></div>
-</div>
+<div class="modal-backdrop" id="modal"><div class="modal" id="modal-content"></div></div>
 
 <script type="module">
-
-/* =========================================================
-   FIREBASE CONFIG
-========================================================= */
 
 const firebaseConfig = {
   apiKey: "AIzaSyAD3LRjJ_2DjK243U30BWSp_t8LWezZUVs",
@@ -115,68 +86,46 @@ const firebaseConfig = {
   databaseURL: "https://pontszamlalo-default-rtdb.europe-west1.firebasedatabase.app"
 };
 
-let firebaseApp, database, dbRef;
-
 await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js");
 await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js");
 
-firebaseApp = firebase.initializeApp(firebaseConfig);
-database = firebase.database();
-dbRef = database.ref("leaderboard");
-
-/* =========================================================
-   STATE
-========================================================= */
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database().ref("leaderboard-state");
 
 let state = { players:{}, countdown:null };
 let currentPage = 0;
 const PAGE_SIZE = 10;
-
 const $ = s => document.querySelector(s);
 const modal = $("#modal");
 const modalContent = $("#modal-content");
 
-const openModal = html => { modalContent.innerHTML = html; modal.style.display = "flex"; };
-const closeModal = () => { modal.style.display="none"; modalContent.innerHTML=""; };
+const openModal = html => { modalContent.innerHTML = html; modal.style.display="flex"; };
+const closeModal = ()=>{ modal.style.display="none"; modalContent.innerHTML=""; };
 modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
 
-/* =========================================================
-   DB LISTENER
-========================================================= */
+function pushState(){ db.set(state); }
 
-dbRef.on("value",snap=>{
-  const v = snap.val() || {};
-  state.players = v.players || {};
-  state.countdown = v.countdown || null;
+db.on("value",snap=>{
+  state = snap.val() || {players:{},countdown:null};
   renderAll();
 });
 
-function pushState(){
-  dbRef.set(state);
-}
-
-/* =========================================================
-   RENDERING
-========================================================= */
-
 function sorted(){
-  return Object.entries(state.players).map(([id,p])=>({id,...p}))
-    .sort((a,b)=> b.chips - a.chips);
+  return Object.entries(state.players).map(([id,p])=>({id,...p})).sort((a,b)=>b.chips-a.chips);
 }
 
 function renderLeaderboard(){
-  const cont = $("#leaderboard");
-  cont.querySelectorAll(".player").forEach(n=>n.remove());
-  const arr = sorted();
-  const pages = Math.max(1,Math.ceil(arr.length/PAGE_SIZE));
+  const c=$("#leaderboard"); c.querySelectorAll(".player").forEach(e=>e.remove());
+  const arr=sorted();
+  const pages=Math.max(1,Math.ceil(arr.length/PAGE_SIZE));
   if(currentPage>=pages) currentPage=pages-1;
+  const slice=arr.slice(currentPage*PAGE_SIZE,(currentPage+1)*PAGE_SIZE);
 
-  const slice = arr.slice(currentPage*PAGE_SIZE,(currentPage+1)*PAGE_SIZE);
   slice.forEach((p,i)=>{
     const r=document.createElement("div");
     r.className="row player";
-    r.innerHTML = `<div class="rank">${currentPage*PAGE_SIZE+i+1}</div><div class="name">${p.name}</div><div class="chips">${p.chips}</div>`;
-    cont.appendChild(r);
+    r.innerHTML=`<div class="rank">${currentPage*PAGE_SIZE+i+1}</div><div>${p.name}</div><div class="chips">${p.chips}</div>`;
+    c.appendChild(r);
   });
   renderPager(pages);
 }
@@ -193,93 +142,59 @@ function renderPager(pages){
 }
 
 function renderCountdown(){
-  const disp=$("#time-display");
-  const st=$("#countdown-state");
-
-  if(!state.countdown || !state.countdown.expiresAt){
-    disp.textContent="—";
-    st.textContent="Inaktív";
-    return;
-  }
-  const rem=Math.max(0,Math.floor((state.countdown.expiresAt-Date.now())/1000));
+  const t=$("#time-display"), s=$("#countdown-state");
+  if(!state.countdown){ t.textContent="—"; s.textContent="Inaktív"; return; }
+  const rem=Math.max(0,Math.floor((state.countdown-Date.now())/1000));
   const h=String(Math.floor(rem/3600)).padStart(2,"0");
-  const m=String(Math.floor(rem%3600/60)).padStart(2,"0");
-  const s=String(rem%60).padStart(2,"0");
-  disp.textContent=`${h}:${m}:${s}`;
-  st.textContent = rem>0?"Aktív":"Lejárt";
+  const m=String(Math.floor((rem%3600)/60)).padStart(2,"0");
+  const sc=String(rem%60).padStart(2,"0");
+  t.textContent=`${h}:${m}:${sc}`;
+  s.textContent = rem>0?"Aktív":"Lejárt";
 }
 
 function renderAll(){ renderLeaderboard(); renderCountdown(); }
 setInterval(renderCountdown,500);
 
-/* =========================================================
-   OPERATIONS
-========================================================= */
-
 function ensurePlayer(name){
-  const key = Object.keys(state.players).find(k=>state.players[k].name.toLowerCase()===name.toLowerCase());
-  if(key) return key;
+  const e=Object.entries(state.players).find(x=>x[1].name.toLowerCase()===name.toLowerCase());
+  if(e) return e[0];
   const id="p_"+Math.random().toString(36).slice(2,9);
-  state.players[id]={name,chips:0};
-  pushState();
-  return id;
+  state.players[id]={name, chips:0}; pushState(); return id;
 }
-
-function addPoints(name,delta){
-  const id=ensurePlayer(name);
-  state.players[id].chips+=delta;
-  pushState();
-}
-
-/* =========================================================
-   MODALS (P,E,I)
-========================================================= */
+function addPoints(name,delta){ const id=ensurePlayer(name); state.players[id].chips+=delta; pushState(); }
+function deletePlayer(id){ delete state.players[id]; pushState(); }
 
 function modalAddPlayer(){
-  openModal(`
-    <h3>Név hozzáadása</h3>
-    <div class="form-row"><label>Név</label><input id="m_name" type="text"></div>
-    <div class="row-actions"><button class="btn" onclick="closeModal()">Mégse</button><button class="btn" onclick="modalAddPlayerOK()">OK</button></div>`);
+  openModal(`<h3>Név hozzáadása</h3>
+  <div class='form-row'><input id='m_name'></div>
+  <div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalAddPlayerOK()'>OK</button></div>`);
 }
-window.modalAddPlayerOK=()=>{
-  const n=document.getElementById("m_name").value.trim();
-  if(!n) return;
-  ensurePlayer(n);
-  closeModal();
-};
+window.modalAddPlayerOK=()=>{ const n=document.getElementById("m_name").value.trim(); if(!n)return; ensurePlayer(n); closeModal(); };
 
 function modalEditPoints(){
-  openModal(`
-    <h3>Pont módosítása</h3>
-    <div class="form-row"><label>Név</label><input id="m_name" type="text"></div>
-    <div class="form-row"><label>Változás (+/-)</label><input id="m_delta" type="number"></div>
-    <div class="row-actions"><button class="btn" onclick="closeModal()">Mégse</button><button class="btn" onclick="modalEditPointsOK()">OK</button></div>`);
+  openModal(`<h3>Pont módosítása</h3>
+  <div class='form-row'><label>Név</label><input id='m_name'></div>
+  <div class='form-row'><label>Változás</label><input id='m_delta' type='number'></div>
+  <div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalEditPointsOK()'>OK</button></div>`);
 }
-window.modalEditPointsOK=()=>{
-  const n=document.getElementById("m_name").value.trim();
-  const d=Number(document.getElementById("m_delta").value);
-  if(!n || isNaN(d)) return;
-  addPoints(n,d);
-  closeModal();
-};
+window.modalEditPointsOK=()=>{ const n=m_name.value.trim(); const d=Number(m_delta.value); if(!n||isNaN(d))return; addPoints(n,d); closeModal(); };
 
 function modalSetTimer(){
-  openModal(`
-    <h3>Visszaszámláló indítása</h3>
-    <div class="form-row"><label>Perc</label><input id="m_min" type="number"></div>
-    <div class="row-actions"><button class="btn" onclick="closeModal()">Mégse</button><button class="btn" onclick="modalSetTimerOK()">OK</button></div>`);
+  openModal(`<h3>Visszaszámláló</h3>
+  <div class='form-row'><label>Perc</label><input id='m_min' type='number'></div>
+  <div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalSetTimerOK()'>OK</button></div>`);
 }
-window.modalSetTimerOK=()=>{
-  const m=Number(document.getElementById("m_min").value);
-  if(!m || m<=0) return;
-  state.countdown={expiresAt:Date.now()+m*60000};
-  pushState();
+window.modalSetTimerOK=()=>{ const m=Number(m_min.value); if(!m)return; state.countdown=Date.now()+m*60000; pushState(); closeModal(); };
+
+function modalDelete(){
+  let list = sorted().map(p=>`<div><label><input type='radio' name='del' value='${p.id}'> ${p.name}</label></div>`).join("");
+  openModal(`<h3>Játékos törlése</h3>${list}<div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalDeleteOK()'>Törlés</button></div>`);
+}
+window.modalDeleteOK=()=>{
+  const id=[...document.querySelectorAll("input[name='del']")].find(r=>r.checked)?.value;
+  if(id){ deletePlayer(id); }
   closeModal();
 };
-
-/* =========================================================
-   KEYBOARD (E,I,P,X,Y)
-========================================================= */
 
 document.addEventListener("keydown",e=>{
   if(modal.style.display==="flex") return;
@@ -287,6 +202,7 @@ document.addEventListener("keydown",e=>{
   if(k==="p") modalAddPlayer();
   if(k==="e") modalEditPoints();
   if(k==="i") modalSetTimer();
+  if(k==="l") modalDelete();
   if(k==="x"){ currentPage=Math.max(0,currentPage-1); renderAll(); }
   if(k==="y"){ currentPage=currentPage+1; renderAll(); }
 });
@@ -294,6 +210,5 @@ document.addEventListener("keydown",e=>{
 renderAll();
 
 </script>
-
 </body>
 </html>
