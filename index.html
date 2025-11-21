@@ -4,211 +4,272 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ranglista</title>
-
   <style>
     :root{
-      --bg:#050507;
-      --panel:#0b0e14;
-      --glass:rgba(255,255,255,0.06);
-      --line:rgba(255,255,255,0.08);
-      --gold:#e3c770;
-      --text:#f2f2f2;
-      --muted:#a7a7b0;
+      --bg1:#050507; --bg2:#0b0f14; --card:#0e1114; --gold:#d4af37; --muted:#9aa4b2; --glass:rgba(255,255,255,0.03);
+      --maxw:1100px;
     }
-    body{margin:0;background:#050507;color:var(--text);font-family:Inter,Arial,sans-serif;}
-    .wrap{padding:26px;display:flex;justify-content:center;}
-    .board{width:100%;max-width:1200px;background:var(--panel);border-radius:20px;padding:22px;border:1px solid var(--line);}    
-    header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
-    .logo{font-size:26px;font-weight:800;color:var(--gold);}    
-    .main{display:flex;gap:24px;}
-    .left{flex:1;}
-    .right{width:320px;}
-    .card{background:var(--glass);padding:16px;border-radius:18px;border:1px solid var(--line);}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(circle at 15% 10%, rgba(212,175,55,0.06), transparent 15%), linear-gradient(180deg,var(--bg1),var(--bg2));color:#eef}
+    .wrap{min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:28px}
+    .board{width:100%;max-width:var(--maxw);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:16px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.03)}
 
-    .table{border-radius:14px;overflow:hidden;margin-top:8px;}
-    .row{display:grid;grid-template-columns:55px 1fr 120px;padding:10px 14px;border-bottom:1px solid var(--line);}
-    .row.header{color:var(--muted);text-transform:uppercase;font-size:13px;}
-    .rank{font-weight:700;color:var(--gold);}    
-    .chips{text-align:right;color:var(--gold);font-weight:700;}
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,#2b2b2b,#171717);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--gold);box-shadow:inset 0 -6px 18px rgba(0,0,0,0.6)}
+    h1{margin:0;font-size:20px}
 
-    .pager{display:flex;justify-content:center;gap:10px;margin-top:12px;}
-    .pagebtn{background:transparent;border:1px solid var(--line);color:var(--text);padding:6px 12px;border-radius:8px;cursor:pointer;}
-    .pagebtn.active{border-color:var(--gold);color:var(--gold);}    
+    .main{display:flex;gap:18px;margin-top:18px}
+    .left{flex:1}
+    .right{width:320px}
 
-    .time{font-size:44px;text-align:center;color:var(--gold);font-weight:800;}
-    .state{text-align:center;color:var(--muted);margin-top:4px;}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
 
-    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:200;}    
-    .modal{background:var(--panel);padding:22px;border-radius:16px;width:100%;max-width:420px;border:1px solid var(--line);}    
-    .form-row{display:flex;flex-direction:column;margin-bottom:14px;}    
-    input{padding:10px;border-radius:10px;border:1px solid var(--line);background:#0002;color:var(--text);}    
-    .row-actions{display:flex;justify-content:flex-end;gap:12px;}    
-    .btn{padding:10px 18px;border-radius:10px;border:1px solid var(--line);background:#111;color:var(--text);cursor:pointer;}    
-    .btn:hover{border-color:var(--gold);color:var(--gold);}    
+    .table{margin-top:12px;border-radius:10px;overflow:hidden}
+    .row{display:grid;grid-template-columns:68px 1fr 140px;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.02)}
+    .row.header{font-size:13px;color:var(--muted);text-transform:uppercase}
+    .rank{font-weight:800;color:var(--gold);font-size:20px}
+    .name{font-weight:700}
+    .chips{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+    .chip{background:var(--glass);padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.03);font-weight:800;color:var(--gold)}
+
+    .pager{display:flex;justify-content:center;gap:8px;margin-top:12px}
+    .pg{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:8px;color:var(--muted);cursor:pointer}
+    .pg.active{outline:2px solid rgba(212,175,55,0.14);color:var(--gold)}
+
+    .countdown{display:flex;flex-direction:column;gap:8px;align-items:center}
+    .big{font-size:40px;font-weight:800;color:var(--gold)}
+    .muted{color:var(--muted);font-size:13px}
+
+    .modal-backdrop{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.8));z-index:120}
+    .modal{width:100%;max-width:560px;background:linear-gradient(180deg,#0e1114,#0b0d10);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+    .form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+    input[type=text], input[type=number]{padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+    .row-actions{display:flex;gap:8px;justify-content:flex-end}
+
+    footer{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--muted);font-size:13px}
+
+    @media (max-width:1000px){.main{flex-direction:column}.right{width:100%}.pager{display:none}}
   </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="board">
+  <div class="wrap">
+    <div class="board" id="app">
+      <header>
+        <div class="brand">
+          <div class="logo">Z</div>
+          <div>
+            <h1>Ranglista</h1>
+            <div class="muted">Valós idejű</div>
+          </div>
+        </div>
+      </header>
 
-    <header><div class="logo">Ranglista</div></header>
+      <div class="main">
+        <div class="left">
+          <div class="card">
+            <div class="table" id="leaderboard">
+              <div class="row header"><div>#</div><div>Név</div><div style="text-align:right">Pont</div></div>
+            </div>
+            <div class="pager" id="pager" aria-hidden="true"></div>
+          </div>
+        </div>
 
-    <div class="main">
-      <div class="left">
-        <div class="card">
-          <div class="table" id="leaderboard"><div class="row header"><div>#</div><div>Név</div><div>Pont</div></div></div>
-          <div class="pager" id="pager"></div>
+        <div class="right">
+          <div class="card countdown">
+            <div class="muted">Visszaszámláló</div>
+            <div class="big" id="time-display">—</div>
+            <div class="muted" id="countdown-state">Inaktív</div>
+          </div>
         </div>
       </div>
-      <div class="right">
-        <div class="card">
-          <div class="time" id="time-display">—</div>
-          <div class="state" id="countdown-state">Inaktív</div>
-        </div>
-      </div>
+
+      <footer>
+        <div>© Ranglista</div>
+        <div class="muted">Belépés kód szükséges</div>
+      </footer>
     </div>
-
   </div>
-</div>
 
-<div class="modal-backdrop" id="modal"><div class="modal" id="modal-content"></div></div>
+  <div class="modal-backdrop" id="modal"><div class="modal" id="modal-content"></div></div>
 
-<script type="module">
+  <script>
+    // ---------- CONFIG (Add your DB URL if different) ----------
+    const firebaseConfig = {
+      apiKey: "AIzaSyAD3LRjJ_2DjK243U30BWSp_t8LWezZUVs",
+      authDomain: "pontszamlalo.firebaseapp.com",
+      databaseURL: "https://pontszamlalo-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "pontszamlalo",
+      storageBucket: "pontszamlalo.firebasestorage.app",
+      messagingSenderId: "323030067350",
+      appId: "1:323030067350:web:6dd018fbf3f5c10703fab7",
+      measurementId: "G-5LM0TMLW2W"
+    };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyAD3LRjJ_2DjK243U30BWSp_t8LWezZUVs",
-  authDomain: "pontszamlalo.firebaseapp.com",
-  projectId: "pontszamlalo",
-  storageBucket: "pontszamlalo.firebasestorage.app",
-  messagingSenderId: "323030067350",
-  appId: "1:323030067350:web:6dd018fbf3f5c10703fab7",
-  measurementId: "G-5LM0TMLW2W",
-  databaseURL: "https://pontszamlalo-default-rtdb.europe-west1.firebasedatabase.app"
-};
+    const PAGE_SIZE = 10;
+    let currentPage = 0;
 
-await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js");
-await import("https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js");
+    const $ = s => document.querySelector(s);
+    const modal = $('#modal'); const modalContent = $('#modal-content');
+    function openModal(html){ modalContent.innerHTML = html; modal.style.display='flex'; }
+    function closeModal(){ modal.style.display='none'; modalContent.innerHTML=''; }
+    modal.addEventListener('click',(e)=>{ if(e.target===modal) closeModal(); });
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database().ref("leaderboard-state");
+    // ---------- Firebase init & realtime sync ----------
+    let dbRef = null;
+    let state = { players: {}, countdown: null, locked:false };
 
-let state = { players:{}, countdown:null };
-let currentPage = 0;
-const PAGE_SIZE = 10;
-const $ = s => document.querySelector(s);
-const modal = $("#modal");
-const modalContent = $("#modal-content");
+    async function init(){
+      await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js');
+      await import('https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js');
 
-const openModal = html => { modalContent.innerHTML = html; modal.style.display="flex"; };
-const closeModal = ()=>{ modal.style.display="none"; modalContent.innerHTML=""; };
-modal.addEventListener("click",e=>{ if(e.target===modal) closeModal(); });
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.database();
+      dbRef = db.ref('leaderboard');
 
-function pushState(){ db.set(state); }
+      // ensure a default node exists to avoid nulls
+      dbRef.once('value').then(snap=>{
+        if(!snap.exists()) dbRef.set({ players: {}, countdown: null, locked:false });
+      }).catch(()=>{});
 
-db.on("value",snap=>{
-  state = snap.val() || {players:{},countdown:null};
-  renderAll();
-});
+      dbRef.on('value', snap=>{
+        const val = snap.val() || {};
+        state.players = val.players || {};
+        state.countdown = val.countdown || null;
+        state.locked = !!val.locked;
+        renderAll();
+      });
+    }
 
-function sorted(){
-  return Object.entries(state.players).map(([id,p])=>({id,...p})).sort((a,b)=>b.chips-a.chips);
-}
+    function pushState(){ if(!dbRef) return; dbRef.set(state).catch(err=>console.error(err)); }
 
-function renderLeaderboard(){
-  const c=$("#leaderboard"); c.querySelectorAll(".player").forEach(e=>e.remove());
-  const arr=sorted();
-  const pages=Math.max(1,Math.ceil(arr.length/PAGE_SIZE));
-  if(currentPage>=pages) currentPage=pages-1;
-  const slice=arr.slice(currentPage*PAGE_SIZE,(currentPage+1)*PAGE_SIZE);
+    // ---------- Utilities ----------
+    function sortedPlayersArray(){
+      return Object.entries(state.players || {}).map(([id,p])=>({id, name:p.name, chips: Number(p.chips||0)}))
+        .sort((a,b)=>{ if(b.chips!==a.chips) return b.chips - a.chips; return a.name.localeCompare(b.name, 'hu'); });
+    }
 
-  slice.forEach((p,i)=>{
-    const r=document.createElement("div");
-    r.className="row player";
-    r.innerHTML=`<div class="rank">${currentPage*PAGE_SIZE+i+1}</div><div>${p.name}</div><div class="chips">${p.chips}</div>`;
-    c.appendChild(r);
-  });
-  renderPager(pages);
-}
+    function escapeHTML(s){ return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\'':'&#39;','"':'&quot;'}[c])); }
 
-function renderPager(pages){
-  const p=$("#pager"); p.innerHTML="";
-  for(let i=0;i<pages;i++){
-    const b=document.createElement("button");
-    b.className="pagebtn"+(i===currentPage?" active":"");
-    b.textContent=i+1;
-    b.onclick=()=>{currentPage=i;renderAll();};
-    p.appendChild(b);
-  }
-}
+    // ---------- Rendering ----------
+    function renderLeaderboard(){
+      const container = $('#leaderboard');
+      container.querySelectorAll('.row.player').forEach(n=>n.remove());
+      const arr = sortedPlayersArray();
+      const pages = Math.max(1, Math.ceil(arr.length / PAGE_SIZE));
+      if(currentPage >= pages) currentPage = pages - 1;
+      const start = currentPage * PAGE_SIZE;
+      const slice = arr.slice(start, start + PAGE_SIZE);
+      if(slice.length === 0){
+        const r = document.createElement('div'); r.className='row player'; r.innerHTML = `<div></div><div class="muted">Nincs játékos</div><div></div>`; container.appendChild(r);
+      }
+      slice.forEach((p, idx)=>{
+        const rank = start + idx + 1;
+        const r = document.createElement('div'); r.className='row player';
+        r.dataset.id = p.id;
+        r.innerHTML = `<div class="rank">${rank}</div><div class="name">${escapeHTML(p.name)}</div><div class="chips"><div class="chip">${p.chips}</div></div>`;
+        r.addEventListener('contextmenu', (e)=>{ e.preventDefault(); openRowMenu(p.id); });
+        container.appendChild(r);
+      });
+      renderPager(pages);
+    }
 
-function renderCountdown(){
-  const t=$("#time-display"), s=$("#countdown-state");
-  if(!state.countdown){ t.textContent="—"; s.textContent="Inaktív"; return; }
-  const rem=Math.max(0,Math.floor((state.countdown-Date.now())/1000));
-  const h=String(Math.floor(rem/3600)).padStart(2,"0");
-  const m=String(Math.floor((rem%3600)/60)).padStart(2,"0");
-  const sc=String(rem%60).padStart(2,"0");
-  t.textContent=`${h}:${m}:${sc}`;
-  s.textContent = rem>0?"Aktív":"Lejárt";
-}
+    function renderPager(pages){
+      const pager = $('#pager'); pager.innerHTML='';
+      for(let i=0;i<pages;i++){
+        const b = document.createElement('button'); b.className='pg'; b.textContent = (i+1);
+        if(i===currentPage) b.classList.add('active');
+        b.addEventListener('click',()=>{ currentPage=i; renderAll(); });
+        pager.appendChild(b);
+      }
+    }
 
-function renderAll(){ renderLeaderboard(); renderCountdown(); }
-setInterval(renderCountdown,500);
+    function renderCountdown(){
+      const disp = $('#time-display'); const stateEl = $('#countdown-state');
+      if(state.countdown && state.countdown.expiresAt){
+        const remaining = Math.max(0, Math.floor((state.countdown.expiresAt - Date.now())/1000));
+        if(remaining<=0){ disp.textContent='00:00:00'; stateEl.textContent='Lejárt — felajánlható lezárás'; }
+        else{ const h = String(Math.floor(remaining/3600)).padStart(2,'0'); const m = String(Math.floor((remaining%3600)/60)).padStart(2,'0'); const s = String(remaining%60).padStart(2,'0'); disp.textContent = `${h}:${m}:${s}`; stateEl.textContent='Aktív'; }
+      } else { disp.textContent='—'; stateEl.textContent='Inaktív'; }
+    }
 
-function ensurePlayer(name){
-  const e=Object.entries(state.players).find(x=>x[1].name.toLowerCase()===name.toLowerCase());
-  if(e) return e[0];
-  const id="p_"+Math.random().toString(36).slice(2,9);
-  state.players[id]={name, chips:0}; pushState(); return id;
-}
-function addPoints(name,delta){ const id=ensurePlayer(name); state.players[id].chips+=delta; pushState(); }
-function deletePlayer(id){ delete state.players[id]; pushState(); }
+    function renderAll(){ renderLeaderboard(); renderCountdown(); }
+    setInterval(()=>renderCountdown(),800);
 
-function modalAddPlayer(){
-  openModal(`<h3>Név hozzáadása</h3>
-  <div class='form-row'><input id='m_name'></div>
-  <div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalAddPlayerOK()'>OK</button></div>`);
-}
-window.modalAddPlayerOK=()=>{ const n=document.getElementById("m_name").value.trim(); if(!n)return; ensurePlayer(n); closeModal(); };
+    // ---------- Operations ----------
+    function ensurePlayerExistsByName(name){
+      const id = Object.keys(state.players || {}).find(k => (state.players[k].name||'').toLowerCase() === name.toLowerCase());
+      if(id) return id;
+      const newid = 'p_' + Math.random().toString(36).slice(2,9);
+      state.players[newid] = { name: name.trim(), chips: 0 };
+      pushState();
+      return newid;
+    }
 
-function modalEditPoints(){
-  openModal(`<h3>Pont módosítása</h3>
-  <div class='form-row'><label>Név</label><input id='m_name'></div>
-  <div class='form-row'><label>Változás</label><input id='m_delta' type='number'></div>
-  <div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalEditPointsOK()'>OK</button></div>`);
-}
-window.modalEditPointsOK=()=>{ const n=m_name.value.trim(); const d=Number(m_delta.value); if(!n||isNaN(d))return; addPoints(n,d); closeModal(); };
+    function changeChipsByName(name, delta){
+      const id = ensurePlayerExistsByName(name);
+      state.players[id].chips = Number(state.players[id].chips || 0) + Number(delta);
+      pushState();
+    }
 
-function modalSetTimer(){
-  openModal(`<h3>Visszaszámláló</h3>
-  <div class='form-row'><label>Perc</label><input id='m_min' type='number'></div>
-  <div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalSetTimerOK()'>OK</button></div>`);
-}
-window.modalSetTimerOK=()=>{ const m=Number(m_min.value); if(!m)return; state.countdown=Date.now()+m*60000; pushState(); closeModal(); };
+    function deletePlayerById(id){ if(!state.players[id]) return; delete state.players[id]; pushState(); }
 
-function modalDelete(){
-  let list = sorted().map(p=>`<div><label><input type='radio' name='del' value='${p.id}'> ${p.name}</label></div>`).join("");
-  openModal(`<h3>Játékos törlése</h3>${list}<div class='row-actions'><button class='btn' onclick='closeModal()'>Mégse</button><button class='btn' onclick='modalDeleteOK()'>Törlés</button></div>`);
-}
-window.modalDeleteOK=()=>{
-  const id=[...document.querySelectorAll("input[name='del']")].find(r=>r.checked)?.value;
-  if(id){ deletePlayer(id); }
-  closeModal();
-};
+    // ---------- Row menu (L key or contextmenu) ----------
+    function openRowMenu(id){
+      const player = state.players[id]; if(!player) return;
+      openModal(`<h3>${escapeHTML(player.name)}</h3>
+        <div class="form-row">Törölni szeretnéd ezt a játékost?</div>
+        <div class="row-actions"><button class="btn ghost" onclick="closeModal()">Mégse</button><button class="btn" onclick="confirmDelete('${id}')">Törlés</button></div>`);
+    }
+    window.confirmDelete = function(id){ deletePlayerById(id); closeModal(); };
 
-document.addEventListener("keydown",e=>{
-  if(modal.style.display==="flex") return;
-  const k=e.key.toLowerCase();
-  if(k==="p") modalAddPlayer();
-  if(k==="e") modalEditPoints();
-  if(k==="i") modalSetTimer();
-  if(k==="l") modalDelete();
-  if(k==="x"){ currentPage=Math.max(0,currentPage-1); renderAll(); }
-  if(k==="y"){ currentPage=currentPage+1; renderAll(); }
-});
+    // ---------- Modals: P, E, I ----------
+    function openAddName(){ openModal(`<h3>Új név</h3><div class="form-row"><input id="inp-name" type="text" placeholder="Név"></div><div class="row-actions"><button class="btn ghost" onclick="closeModal()">Mégse</button><button class="btn" id="ok-add">Hozzáad</button></div>`); setTimeout(()=>$('#inp-name').focus(),40); $('#ok-add').addEventListener('click', ()=>{ const name = $('#inp-name').value.trim(); if(!name) return alert('Adj meg egy nevet'); ensurePlayerExistsByName(name); closeModal(); }); }
 
-renderAll();
+    function openEditPoints(){ openModal(`<h3>Pont módosítása</h3><div class="form-row"><input id="inp-name2" type="text" placeholder="Név"></div><div class="form-row"><input id="inp-delta" type="number" placeholder="+100 vagy -50"></div><div class="row-actions"><button class="btn ghost" onclick="closeModal()">Mégse</button><button class="btn" id="ok-edit">OK</button></div>`); setTimeout(()=>$('#inp-name2').focus(),40); $('#ok-edit').addEventListener('click', ()=>{ const name = $('#inp-name2').value.trim(); const delta = Number($('#inp-delta').value); if(!name) return alert('Adj meg egy nevet'); if(isNaN(delta)) return alert('Adj meg számot'); changeChipsByName(name, delta); closeModal(); }); }
 
-</script>
+    function openSetTimer(){ openModal(`<h3>Visszaszámláló (perc)</h3><div class="form-row"><input id="inp-mins" type="number" placeholder="pl. 90"></div><div class="row-actions"><button class="btn ghost" onclick="closeModal()">Mégse</button><button class="btn" id="ok-timer">Beállít</button></div>`); setTimeout(()=>$('#inp-mins').focus(),40); $('#ok-timer').addEventListener('click', ()=>{ const mins = Number($('#inp-mins').value); if(isNaN(mins) || mins<=0) return alert('Adj meg pozitív percet'); state.countdown = { expiresAt: Date.now() + mins*60*1000 }; pushState(); closeModal(); }); }
+
+    // ---------- Entrance code ----------
+    async function askCode(){
+      return new Promise((res)=>{
+        openModal(`<h3>Belépési kód</h3><div class="form-row"><input id="inp-code" type="text" placeholder="Kód"></div><div class="row-actions"><button class="btn ghost" id="exit">Kilép</button><button class="btn" id="enter">Belép</button></div>`);
+        $('#exit').addEventListener('click', ()=>{ closeModal(); document.body.innerHTML='<div style="padding:40px;color:#fff">A hozzáférés megtagadva.</div>'; res(false); });
+        $('#enter').addEventListener('click', ()=>{ const v = $('#inp-code').value.trim(); if(v==='Kacsacsőrű-sertéspingvin'){ closeModal(); res(true); } else alert('Hibás kód'); });
+      });
+    }
+
+    // ---------- Keyboard controls ----------
+    document.addEventListener('keydown', (e)=>{
+      if(modal.style.display==='flex') return; // modals block keys
+      const key = e.key.toLowerCase();
+      if(key==='p'){ e.preventDefault(); openAddName(); }
+      if(key==='e'){ e.preventDefault(); openEditPoints(); }
+      if(key==='i'){ e.preventDefault(); openSetTimer(); }
+      if(key==='l'){ e.preventDefault(); // open delete selector modal
+        const list = sortedPlayersArray().map(p=>`<div style="margin:6px 0"><label><input type='radio' name='del' value='${p.id}'> ${escapeHTML(p.name)} (${p.chips})</label></div>`).join('');
+        openModal(`<h3>Játékos törlése</h3><div class='form-row'>${list||'<div class="muted">Nincs játékos</div>'}</div><div class='row-actions'><button class='btn ghost' onclick='closeModal()'>Mégse</button><button class='btn' id='do-del'>Törlés</button></div>`);
+        setTimeout(()=>{ const btn = document.getElementById('do-del'); if(btn) btn.addEventListener('click', ()=>{ const sel = document.querySelector("input[name=del]:checked"); if(!sel) return alert('Válassz játékost'); deletePlayerById(sel.value); closeModal(); }); },50);
+      }
+      if(key==='x'){ if(window.matchMedia('(pointer:fine) and (min-width:900px)').matches){ currentPage = Math.max(0, currentPage-1); renderAll(); } }
+      if(key==='y'){ if(window.matchMedia('(pointer:fine) and (min-width:900px)').matches){ const arr = sortedPlayersArray(); const pages = Math.max(1, Math.ceil(arr.length / PAGE_SIZE)); currentPage = Math.min(pages-1, currentPage+1); renderAll(); } }
+      if(key==='escape'){ closeModal(); }
+    });
+
+    // ---------- Row context: click to open delete menu on mobile ----------
+    document.addEventListener('click', (e)=>{
+      const row = e.target.closest('.row.player'); if(!row) return; // ignore header
+      // on mobile, open menu via long-press? here single click opens menu
+      if(window.matchMedia('(pointer:coarse)').matches){ const id = row.dataset.id; if(id) openRowMenu(id); }
+    });
+
+    // ---------- Init ----------
+    (async ()=>{
+      await init();
+      const ok = await askCode(); if(!ok) return;
+      // after entering, initial render comes from DB listener
+    })();
+
+  </script>
 </body>
 </html>
